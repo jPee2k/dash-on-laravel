@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\Admin;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 
 /*
@@ -15,10 +17,12 @@ use App\Http\Controllers\PageController;
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/', [PageController::class, 'home']);
-    // Route::auth();
+    Route::get('/', [PageController::class, 'index'])->name('home.index');
 });
 
-// Route::grout(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-//     Route::get('/', [AdminController::class, 'index']);
-// });
+Route::group(
+    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => Admin::class],
+    function () {
+        Route::get('/', [DashboardController::class, 'index']);
+    }
+);
