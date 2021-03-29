@@ -31,10 +31,10 @@ mix.styles([
     'resources/css/dash/light-template.css',
 ], 'public/dist/css/dash.css');
 mix.scripts([
-    'resources/js/dash/vendor-override/chartjs-doughnut.js',
-    'resources/js/dash/vendor-override/tooltip.js',
-    'resources/js/dash/common-msb.js',
-    'resources/js/dash/dashboard-msb.js',
     'resources/js/dash/vendor.base.js',
     'resources/js/dash/vendor.bundle.js',
+    'resources/js/dash/common-msb.js',
+    'resources/js/dash/vendor-override/tooltip.js',
+    'resources/js/dash/dashboard-msb.js',
+    'resources/js/dash/vendor-override/chartjs-doughnut.js',
 ], 'public/dist/js/dash.js');

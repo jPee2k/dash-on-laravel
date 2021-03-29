@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::paginate(10);
+        $pages = Page::paginate(15);
 
         return view('dashboard.page.index', compact('pages'));
     }
