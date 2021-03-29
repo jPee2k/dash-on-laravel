@@ -11,6 +11,30 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/dist/js')
     .vue()
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/dist/css');
+
+// site
+mix.styles([
+    'resources/css/site/cssLibs8832.css',
+    'resources/css/site/bundle8832.css',
+], 'public/dist/css/site.css');
+mix.scripts([
+    'resources/js/site/libs8832.js',
+    'resources/js/site/script8832.js',
+], 'public/dist/js/site.js')
+
+// dash
+mix.styles([
+    'resources/css/dash/vendor.styles.css',
+    'resources/css/dash/light-template.css',
+], 'public/dist/css/dash.css');
+mix.scripts([
+    'resources/js/dash/vendor-override/chartjs-doughnut.js',
+    'resources/js/dash/vendor-override/tooltip.js',
+    'resources/js/dash/common-msb.js',
+    'resources/js/dash/dashboard-msb.js',
+    'resources/js/dash/vendor.base.js',
+    'resources/js/dash/vendor.bundle.js',
+], 'public/dist/js/dash.js');

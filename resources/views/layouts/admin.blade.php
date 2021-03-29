@@ -9,20 +9,24 @@
 
     <title>@yield('title')</title>
 
-    <link rel="stylesheet" href="{{ asset('dist/css/dashboard/vendor.styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/css/dashboard/light-template.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/dash.css') }}">
 </head>
 
 <body>
     <div class="main-container">
         <div class="container-fluid page-body-wrapper">
-            
-            @yield('content')
+
+            @include('dashboard.shared.menu')
+            @include('dashboard.shared.sidebar')
+
+            <div class="main-panel">
+                @yield('content')
+            </div>
 
         </div>
     </div>
 
-    @include('dashboard.shared.scripts')
+    <script src="{{ asset('dist/js/dash.js') }}"></script>
 </body>
 
 </html>

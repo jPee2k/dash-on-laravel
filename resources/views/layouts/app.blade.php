@@ -13,8 +13,7 @@
     @yield('opengraph')
     @include('pages.shared.favicon')
 
-    <link href="{{ asset('dist/css/cssLibs8832.css') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/bundle8832.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/css/site.css') }}" rel="stylesheet">
 
     @include('pages.shared.scripts')
 </head>
@@ -37,8 +36,7 @@
     </footer>
 
     <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=7142b491-3aa2-4bee-9db3-82e546ab9241"></script>
-    <script src="{{ asset('dist/js/libs8832.js') }}" defer></script>
-    <script src="{{ asset('dist/js/script8832.js') }}" defer></script>
+    <script src="{{ asset('dist/js/site.js') }}" defer></script>
 </body>
 
 </html>

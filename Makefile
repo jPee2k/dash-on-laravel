@@ -18,7 +18,7 @@ clear:
 	php artisan route:clear
 	php artisan config:clear
 	php artisan cache:clear
-	php artisan debugbar:clear
+	php artisan route:clear
 
 log:
 	tail -f storage/logs/laravel.log
