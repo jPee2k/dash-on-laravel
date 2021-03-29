@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\Admin;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
@@ -16,6 +17,12 @@ use App\Http\Controllers\PageController;
 |
 */
 
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false,
+]);
+
 Route::group(['middleware' => 'web'], function () {
     Route::get('/', [PageController::class, 'index'])->name('home.index');
 });
@@ -23,6 +30,6 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => Admin::class],
     function () {
-        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     }
 );

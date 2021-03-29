@@ -11,18 +11,18 @@
     <title>@yield('title')</title>
 
     @yield('opengraph')
-    @include('shared.favicon')
+    @include('pages.shared.favicon')
 
     <link href="{{ asset('dist/css/cssLibs8832.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/css/bundle8832.css') }}" rel="stylesheet">
 
-    @include('shared.scripts')
+    @include('pages.shared.scripts')
 </head>
 
 <body>
     <header>
         <div class="container">
-            @include('shared.header')
+            @include('pages.shared.header')
         </div>
     </header>
 
@@ -32,7 +32,7 @@
 
     <footer>
         <div class="container">
-            @include('shared.footer')
+            @include('pages.shared.footer')
         </div>
     </footer>
 
