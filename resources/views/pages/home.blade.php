@@ -7,6 +7,7 @@
     <meta property="og:title" content="Moneyball">
     <meta property="og:description" content="">
     <meta property="og:image" content="http://moneyball.redlab.site/img/start-img.png">
+    <meta name="keywords" content="">
 @endsection
 @section('content')
     <div class="b-main">

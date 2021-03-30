@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use Illuminate\Validation\Rule;
+Use App\Http\Requests\PageValidator;
 
 class PageController extends Controller
 {
@@ -83,12 +84,14 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
+        $meta = $page->meta;
+
         $status = [
             'draft' => 'Draft',
             'publish' => 'Publish'
         ];
 
-        return view('dashboard.page.edit', compact('page', 'status'));
+        return view('dashboard.page.edit', compact('page', 'status', 'meta'));
     }
 
     /**
@@ -98,21 +101,10 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Page $page)
+    public function update(PageValidator $request, Page $page)
     {
-        $data = $this->validate($request, [
-            'name' => [
-                'required',
-                'max:255',
-                'min:3',
-                'unique:pages'
-            ],
-            'status' => [
-                Rule::in(['publish', 'draft']),
-                'required'
-            ],
-        ]);
-
+        dd($request);
+        $data = $request->validate();
         $page->update($data);
 
         return redirect()->route('pages.index')

@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\Admin;
-use App\Http\Controllers\Dash\DashboardController;
-use App\Http\Controllers\Dash\PageController;
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +22,16 @@ Auth::routes([
 ]);
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
+        ->name('home.index');
 });
 
 Route::group(
     ['prefix' => 'admin', 'middleware' => Admin::class],
     function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-        Route::resource('pages', PageController::class);
+        Route::get('/', [\App\Http\Controllers\Dash\DashboardController::class, 'index'])
+            ->name('dashboard.index');
+            
+        Route::resource('pages', \App\Http\Controllers\Dash\PageController::class);
     }
 );
