@@ -29,6 +29,7 @@ mix.scripts([
 mix.styles([
     'resources/css/dash/vendor.styles.css',
     'resources/css/dash/light-template.css',
+    'resources/css/dash/styles.css',
 ], 'public/dist/css/dash.css');
 mix.scripts([
     'resources/js/dash/vendor.base.js',

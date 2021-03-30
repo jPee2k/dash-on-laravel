@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
+use Illuminate\Validation\Rule;
 
 class PageController extends Controller
 {
@@ -27,7 +28,13 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        $page = new Page();
+        $status = [
+            'draft' => 'Draft',
+            'publish' => 'Publish'
+        ];
+
+        return view('dashboard.page.create', compact('page', 'status'));
     }
 
     /**
@@ -38,7 +45,23 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => [
+                'required',
+                'max:255',
+                'min:3',
+                'unique:pages'
+            ],
+            'status' => [
+                Rule::in(['publish', 'draft']),
+                'required'
+            ],
+        ]);
+
+        $page = Page::create($data);
+
+        return redirect()->route('pages.index')
+            ->with('success', 'The new Page was added successfully');
     }
 
     /**
@@ -50,7 +73,6 @@ class PageController extends Controller
     public function show(Page $page)
     {
         //
-
     }
 
     /**
@@ -61,7 +83,12 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        $status = [
+            'draft' => 'Draft',
+            'publish' => 'Publish'
+        ];
+
+        return view('dashboard.page.edit', compact('page', 'status'));
     }
 
     /**
@@ -73,7 +100,23 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => [
+                'required',
+                'max:255',
+                'min:3',
+                'unique:pages'
+            ],
+            'status' => [
+                Rule::in(['publish', 'draft']),
+                'required'
+            ],
+        ]);
+
+        $page->update($data);
+
+        return redirect()->route('pages.index')
+            ->with('success', 'The Page was updated successfully');
     }
 
     /**
@@ -84,6 +127,11 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        if ($page) {
+            $page->delete();
+        }
+
+        return redirect()->route('pages.index')
+            ->with('success', 'The Page was removed successfully');
     }
 }
