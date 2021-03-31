@@ -36,12 +36,12 @@
             </div>
             <div class="nav-wrapper">
                 <ul class="nav">
-                    <li class="nav-header">General</li>
+                    {{-- <li class="nav-header">General</li>
                     <li class="nav-item">
                         <a class="nav-link" href="">
                             <span class="menu-title">Icons & Logo</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-header">Content</li>
                     <li class="nav-item">
                         <a href="{{ route('pages.index') }}" class="nav-link">

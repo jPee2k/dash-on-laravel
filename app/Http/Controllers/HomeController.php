@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Models\Boost;
 
 class HomeController extends Controller
 {
@@ -15,10 +16,18 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $page = Page::where('name', 'main page')->limit(1)->get()->first();
-
-        $meta = $page->meta;
         $url = $request->root();
 
-        return view('pages.home', compact('meta', 'url'));
+        $meta = $page->meta;
+        $customFields = $page->customFields;
+        dd($customFields);
+        // $header =
+        // $top = 
+        $boostSection = Boost::get(['title', 'image_name', 'text']);
+        // $start = 
+        // $partners =
+        // $footer =
+ 
+        return view('pages.home', compact('meta', 'url', 'boostSection'));
     }
 }

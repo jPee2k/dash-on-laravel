@@ -15,4 +15,9 @@ class Page extends Model
     {
         return $this->hasOne(Meta::class);
     }
+
+    public function customFields()
+    {
+        return $this->hasMany(CustomField::class);
+    }
 }
