@@ -26,12 +26,12 @@ class PageValidator extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:255', 'min:3', 'unique:pages'],
+            'name' => ['required', 'max:255', 'min:3', Rule::unique('pages', 'name')->ignore($this->page)],
             'status' => [Rule::in(['publish', 'draft']), 'required'],
-            'title' => ['required', 'min:3', 'max:255', 'unique:meta_tags'],
-            'url' => ['required', 'min:3', 'max:255', 'url'],
+            'title' => ['required', 'min:3', 'max:255'],
+            'url' => ['required', 'min:3', 'max:255'],
             'description' => ['nullable', 'min:3', 'max:8000'],
-            'image' => ['image', 'nullable','max:512'],
+            'image_name' => ['image', 'nullable','max:512'],
             'keywords' => ['nullable', 'min:3', 'max:8000']
         ];
     }

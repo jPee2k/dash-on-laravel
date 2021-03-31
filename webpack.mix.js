@@ -36,6 +36,7 @@ mix.scripts([
     'resources/js/dash/vendor.bundle.js',
     'resources/js/dash/common-msb.js',
     'resources/js/dash/vendor-override/tooltip.js',
-    'resources/js/dash/dashboard-msb.js',
-    'resources/js/dash/vendor-override/chartjs-doughnut.js',
+    // 'resources/js/dash/dashboard-msb.js',
+    // 'resources/js/dash/vendor-override/chartjs-doughnut.js',
+    'resources/js/dash/scripts.js',
 ], 'public/dist/js/dash.js');

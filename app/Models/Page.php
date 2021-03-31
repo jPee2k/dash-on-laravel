@@ -9,7 +9,7 @@ class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status', 'title', 'url', 'description', 'keywords'];
+    protected $fillable = ['name', 'status'];
 
     public function meta()
     {

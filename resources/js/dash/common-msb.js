@@ -1,6 +1,6 @@
 (function($) {
     'use strict';
-    $(function () {
+    $(function() {
         Popper.Defaults.modifiers.computeStyle.gpuAcceleration = false;
         feather.replace();
         var secondarySidebar = $(".secondary");
@@ -26,7 +26,7 @@
         $('.nav li', secondarySidebar).each(function() {
             var $this = $(this);
             if ($this.find('a').length) {
-                $($this.find('a')).each(function(index, element){
+                $($this.find('a')).each(function(index, element) {
                     if ($(this).attr("href").indexOf(current) !== -1) {
                         $(this).parents('.collapse').addClass('show');
                         $(this).closest('li').addClass('active');
@@ -36,18 +36,18 @@
         });
         var flag = 0;
         secondarySidebar.on('show.bs.collapse', '.collapse', function() {
-            var parentIndex ='';
-            if($(this).parents('div.collapse').length){
+            var parentIndex = '';
+            if ($(this).parents('div.collapse').length) {
                 flag = 1;
                 parentIndex = $(this).parents('div.collapse').parent().index();
-                secondarySidebar.find('.collapse.show').each(function(){
-                    if(parentIndex != $(this).parent().index()){
+                secondarySidebar.find('.collapse.show').each(function() {
+                    if (parentIndex != $(this).parent().index()) {
                         $(this).collapse('hide');
                     }
                 });
-            }else {
+            } else {
                 if (flag == 0) {
-                    secondarySidebar.find('.collapse.show').each(function () {
+                    secondarySidebar.find('.collapse.show').each(function() {
                         $(this).collapse('hide');
                     });
                 }
@@ -58,15 +58,15 @@
         //Sidebar Toggle
         $('[data-toggle="msb-sidebar"]').on("click", function() {
             $('#navbar').toggleClass('active');
-            if($('.sidebar-overlay').hasClass("active")){
+            if ($('.sidebar-overlay').hasClass("active")) {
                 $('.sidebar-overlay').removeClass('active');
-            }else{
+            } else {
                 $('.sidebar-overlay').addClass('active');
             }
         });
 
-        //Secondary Sidebar Scroll
-        if($('.nav-wrapper').length) {
+        // Secondary Sidebar Scroll
+        if ($('.nav-wrapper').length) {
             var ps = new PerfectScrollbar('.nav-wrapper', {
                 wheelPropagation: false,
                 wheelSpeed: 0.5,
@@ -77,35 +77,35 @@
         }
 
         //Scrollbar for Overlay Profile Toolbar
-        var ps = new PerfectScrollbar('.profile-body', {
-            wheelPropagation: false,
-            wheelSpeed: 0.5,
-            swipeEasing: true,
-            minScrollbarLength: 50,
-            maxScrollbarLength: 250,
-        });
+        // var ps = new PerfectScrollbar('.profile-body', {
+        //     wheelPropagation: false,
+        //     wheelSpeed: 0.5,
+        //     swipeEasing: true,
+        //     minScrollbarLength: 50,
+        //     maxScrollbarLength: 250,
+        // });
 
         //Scrollbar for Overlay TaskList
-        var ps = new PerfectScrollbar('.task-list-container', {
-            wheelPropagation: false,
-            wheelSpeed: 0.5,
-            swipeEasing: true,
-            minScrollbarLength: 50,
-            maxScrollbarLength: 250,
-        });
+        // var ps = new PerfectScrollbar('.task-list-container', {
+        //     wheelPropagation: false,
+        //     wheelSpeed: 0.5,
+        //     swipeEasing: true,
+        //     minScrollbarLength: 50,
+        //     maxScrollbarLength: 250,
+        // });
 
         //Open Profile Toolbar Overlay
-        $('#profileToolbar').on('click', function () {
+        $('#profileToolbar').on('click', function() {
             $('.profile-overlay').addClass('active');
             $('.sidebar-overlay').addClass('active');
         });
 
-        $('#settingsConf').on('click', function () {
+        $('#settingsConf').on('click', function() {
             $('.settings-overlay').addClass('active');
             $('.sidebar-overlay').addClass('active');
         });
 
-        $('.setting-close, .profile-close, .sidebar-overlay').on('click', function () {
+        $('.setting-close, .profile-close, .sidebar-overlay').on('click', function() {
             $('.profile-overlay').removeClass('active');
             $('.settings-overlay').removeClass('active');
             $('.sidebar-overlay').removeClass('active');
@@ -113,11 +113,11 @@
         });
 
         //Enable or Disabled configurations on setting panel
-        $('.config-icon').on('click', function(){
-            if($(this).parent().hasClass("enable")){
+        $('.config-icon').on('click', function() {
+            if ($(this).parent().hasClass("enable")) {
                 $(this).parent().removeClass("enable");
                 $(this).parent().addClass("disable");
-            }else{
+            } else {
                 $(this).parent().removeClass("disable");
                 $(this).parent().addClass("enable");
             }

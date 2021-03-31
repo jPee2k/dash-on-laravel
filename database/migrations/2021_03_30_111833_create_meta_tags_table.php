@@ -17,9 +17,9 @@ class CreateMetaTagsTable extends Migration
             $table->id();
             $table->foreignId('page_id')->constrained()->onDelete('cascade');
             $table->string('url');
-            $table->string('title')->unique();
-            $table->text('description')->nulable();
-            $table->string('image')->nullable();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('image_name')->nullable();
             $table->text('keywords')->nullable();
             $table->timestamps();
         });

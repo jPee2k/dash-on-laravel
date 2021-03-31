@@ -5,6 +5,7 @@
     <div class="card card-margin">
         <div class="card-header">
             <h5 class="card-title">Create Page</h5>
+            
         </div>
         <div class="card-body">
             {{ Form::model($page, ['method' => 'POST', 'url' => route('pages.store', $page), 'files' => true, 'class' => 'col-md-7 col-lg-5', 'role' => 'form', 'autocomplete' => 'off']) }}

@@ -6,4 +6,8 @@
     <div class="alert alert-warning" role="alert">
         <b>{{ Session::get('warning') }}<b>
     </div>
+@elseif ($errors->any())
+    <div class="alert alert-danger" role="alert">
+        <b>{{ $errors->first() }}</b>
+    </div>
 @endif

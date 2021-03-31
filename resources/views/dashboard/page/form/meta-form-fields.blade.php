@@ -28,6 +28,11 @@
     @endif
 </div>
 
+@isset($meta->image_name)
+    <div class="border rounded mb-4">
+        <img class="img-fluid" src="{{ $meta->getImage() }}" alt="og:image">
+    </div>
+@endisset
 <div class="custom-file form-group">
     <label class="custom-file-label" for="image">og: Image</label>
     {{ Form::file('image', ['class' => 'custom-file-input form-control']) }}

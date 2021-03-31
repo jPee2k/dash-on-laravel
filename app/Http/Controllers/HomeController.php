@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Page;
 
 class HomeController extends Controller
 {
@@ -11,8 +12,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.home');
+        $page = Page::where('name', 'main page')->limit(1)->get()->first();
+
+        $meta = $page->meta;
+        $url = $request->root();
+
+        return view('pages.home', compact('meta', 'url'));
     }
 }

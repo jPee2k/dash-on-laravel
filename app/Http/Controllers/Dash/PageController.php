@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Dash;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Page;
-use Illuminate\Validation\Rule;
-Use App\Http\Requests\PageValidator;
+use App\Models\Meta;
+use App\Http\Requests\PageValidator;
 
 class PageController extends Controller
 {
@@ -30,12 +29,13 @@ class PageController extends Controller
     public function create()
     {
         $page = new Page();
+        $meta = new Meta();
         $status = [
             'draft' => 'Draft',
             'publish' => 'Publish'
         ];
 
-        return view('dashboard.page.create', compact('page', 'status'));
+        return view('dashboard.page.create', compact('page', 'status', 'meta'));
     }
 
     /**
@@ -44,22 +44,16 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PageValidator $request)
     {
-        $data = $this->validate($request, [
-            'name' => [
-                'required',
-                'max:255',
-                'min:3',
-                'unique:pages'
-            ],
-            'status' => [
-                Rule::in(['publish', 'draft']),
-                'required'
-            ],
-        ]);
+        $data = $request->validated();
 
         $page = Page::create($data);
+        $meta = new Meta();
+        $meta->page_id = $page->id;
+        $meta->fill($data);
+        $meta->uploadImage($request->file('image'));
+        $meta->save();
 
         return redirect()->route('pages.index')
             ->with('success', 'The new Page was added successfully');
@@ -103,9 +97,13 @@ class PageController extends Controller
      */
     public function update(PageValidator $request, Page $page)
     {
-        dd($request);
-        $data = $request->validate();
+        $data = $request->validated();
+        $meta = $page->meta;
+
         $page->update($data);
+        $meta->fill($data);
+        $meta->uploadImage($request->file('image'));
+        $meta->save();
 
         return redirect()->route('pages.index')
             ->with('success', 'The Page was updated successfully');
@@ -120,6 +118,7 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         if ($page) {
+            $page->meta->removeImage();
             $page->delete();
         }
 

@@ -9,6 +9,8 @@
 
     <title>@yield('title')</title>
 
+    @include('pages.shared.favicon')
+    
     <link rel="stylesheet" href="{{ asset('dist/css/dash.css') }}">
 </head>
 
