@@ -13,10 +13,12 @@ class CreatePartnersTable extends Migration
      */
     public function up()
     {
-        // Schema::create('partners', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('partners', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('page_id')->constrained()->onDelete('cascade');
+            $table->string('image_name')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,6 +28,6 @@ class CreatePartnersTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('partners');
+        Schema::dropIfExists('partners');
     }
 }

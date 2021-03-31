@@ -16,8 +16,9 @@ class CreateCustomFieldsTable extends Migration
         Schema::create('custom_fields', function (Blueprint $table) {
             $table->id();
             $table->foreignId('page_id')->constrained()->onDelete('cascade');
-            $table->string('name')->unique();
-            $table->text('field');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('field')->nullable();
             $table->timestamps();
         });
     }

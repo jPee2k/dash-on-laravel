@@ -20,7 +20,12 @@ class HomeController extends Controller
 
         $meta = $page->meta;
         $customFields = $page->customFields;
-        dd($customFields);
+        $fields = [
+            'bg first' => $customFields->where('slug', 'bg-img')->first()->field,
+            'bg second' => $customFields->where('slug', 'bg-img-1')->first()->field,
+            'bg third' => $customFields->where('slug', 'bg-img-2')->first()->field,
+        ];
+        
         // $header =
         // $top = 
         $boostSection = Boost::get(['title', 'image_name', 'text']);
@@ -28,6 +33,6 @@ class HomeController extends Controller
         // $partners =
         // $footer =
  
-        return view('pages.home', compact('meta', 'url', 'boostSection'));
+        return view('pages.home', compact('meta', 'url', 'boostSection', 'fields'));
     }
 }

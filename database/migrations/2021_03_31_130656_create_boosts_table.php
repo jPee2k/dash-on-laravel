@@ -15,10 +15,11 @@ class CreateBoostsTable extends Migration
     {
         Schema::create('boosts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('page_id')->constrained()->onDelete('cascade'); // todo
             $table->string('title');
-            $table->string('slug');
-            $table->text('text');
-            $table->string('image_name');
+            $table->string('slug')->unique(); //todo
+            $table->text('text')->nullable(); //todo
+            $table->string('image_name')->nullable(); //todo
             $table->timestamps();
         });
     }

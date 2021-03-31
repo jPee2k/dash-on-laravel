@@ -13,13 +13,14 @@ class CreateStartsTable extends Migration
      */
     public function up()
     {
-        // Schema::create('starts', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('title');
-        //     $table->string('image_name');
-        //     $table->;
-        //     $table->timestamps();
-        // });
+        Schema::create('starts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('page_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            // $table->string('slug')->unique();
+            $table->string('image_name')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -29,6 +30,6 @@ class CreateStartsTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('starts');
+        Schema::dropIfExists('starts');
     }
 }

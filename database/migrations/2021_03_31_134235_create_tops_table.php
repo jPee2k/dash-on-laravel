@@ -15,6 +15,7 @@ class CreateTopsTable extends Migration
     {
         // Schema::create('tops', function (Blueprint $table) {
         //     $table->id();
+        //     $table->foreignId('page_id')->constrained()->onDelete('cascade');
         //     $table->timestamps();
         // });
     }
