@@ -31,7 +31,8 @@ Route::group(
     function () {
         Route::get('/', [\App\Http\Controllers\Dash\DashboardController::class, 'index'])
             ->name('dashboard.index');
-            
-        Route::resource('pages', \App\Http\Controllers\Dash\PageController::class);
+
+        Route::resource('pages', \App\Http\Controllers\Dash\PageController::class)
+            ->except('show');
     }
 );

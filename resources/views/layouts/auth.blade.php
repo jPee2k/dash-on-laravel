@@ -9,13 +9,12 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    @include('pages.shared.favicon')
-
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicons/favicon-32x32.png') }}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
-    
-    <script src="{{ asset('dist/js/app.js') }}" defer></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
 <body>

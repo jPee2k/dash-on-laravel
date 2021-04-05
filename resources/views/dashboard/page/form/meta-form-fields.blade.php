@@ -1,6 +1,6 @@
 <div class="form-group">
     {{ Form::label('title', 'Title') }} <i class="text-danger">*</i>
-    {{ Form::text('title', $meta->title, ['class' => 'form-control', 'aria-describedby' => 'title-error', 'placeholder' => 'Enter the Title', 'novalidate']) }}
+    {{ Form::text('title', $page->title, ['class' => 'form-control', 'aria-describedby' => 'title-error', 'placeholder' => 'Enter the Title', 'novalidate']) }}
     @if ($errors->has('title'))
         <small id="title-error" class="form-text text-danger">
             {{ $errors->first('title') }}
@@ -10,7 +10,7 @@
 
 <div class="form-group">
     {{ Form::label('url', 'og: URL') }} <i class="text-danger">*</i>
-    {{ Form::text('url', $meta->url, ['class' => 'form-control', 'aria-describedby' => 'url-error', 'placeholder' => 'Enter the URL', 'novalidate']) }}
+    {{ Form::text('url', $page->url, ['class' => 'form-control', 'aria-describedby' => 'url-error', 'placeholder' => 'Enter the URL', 'novalidate']) }}
     @if ($errors->has('url'))
         <small id="url-error" class="form-text text-danger">
             {{ $errors->first('url') }}
@@ -20,7 +20,7 @@
 
 <div class="form-group">
     {{ Form::label('description', 'og: Description') }}
-    {{ Form::textarea('description', $meta->description, ['class' => 'form-control', 'aria-describedby' => 'description-error', 'placeholder' => 'Enter the Description', 'novalidate']) }}
+    {{ Form::textarea('description', $page->description, ['class' => 'form-control', 'aria-describedby' => 'description-error', 'placeholder' => 'Enter the Description', 'novalidate']) }}
     @if ($errors->has('description'))
         <small id="description-error" class="form-text text-danger">
             {{ $errors->first('description') }}
@@ -28,9 +28,9 @@
     @endif
 </div>
 
-@isset($meta->image_name)
+@isset($page->image_name)
     <div class="border rounded mb-4">
-        <img class="img-fluid" src="{{ $meta->getImage() }}" alt="og:image">
+        <img class="img-fluid" src="{{ $page->getImage() }}" alt="og:image">
     </div>
 @endisset
 <div class="custom-file form-group">
@@ -45,7 +45,7 @@
 
 <div class="form-group">
     {{ Form::label('keywords', 'Keywords') }}
-    {{ Form::textarea('keywords', $meta->keywords, ['class' => 'form-control', 'aria-describedby' => 'keywords-error', 'placeholder' => 'Enter keywords separated by commas', 'novalidate']) }}
+    {{ Form::textarea('keywords', $page->keywords, ['class' => 'form-control', 'aria-describedby' => 'keywords-error', 'placeholder' => 'Enter keywords separated by commas', 'novalidate']) }}
     @if ($errors->has('keywords'))
         <small id="keywords-error" class="form-text text-danger">
             {{ $errors->first('keywords') }}

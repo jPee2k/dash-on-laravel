@@ -4,35 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
-use App\Models\Boost;
 
 class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
     public function index(Request $request)
     {
-        $page = Page::where('name', 'main page')->limit(1)->get()->first();
+        $page = Page::query()->where('name', 'main page')->limit(1)->get()->first();
         $url = $request->root();
 
-        $meta = $page->meta;
-        $customFields = $page->customFields;
-        $fields = [
-            'bg first' => $customFields->where('slug', 'bg-img')->first()->field,
-            'bg second' => $customFields->where('slug', 'bg-img-1')->first()->field,
-            'bg third' => $customFields->where('slug', 'bg-img-2')->first()->field,
-        ];
-        
-        // $header =
-        // $top = 
-        $boostSection = Boost::get(['title', 'image_name', 'text']);
-        // $start = 
-        // $partners =
-        // $footer =
- 
-        return view('pages.home', compact('meta', 'url', 'boostSection', 'fields'));
+        return view('pages.home', compact('page', 'url'));
     }
 }

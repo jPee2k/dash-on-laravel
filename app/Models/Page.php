@@ -4,20 +4,51 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'slug', 'url', 'title', 'description', 'image_name', 'keywords'];
 
-    public function meta()
+    public function uploadImage($image)
     {
-        return $this->hasOne(Meta::class);
+        if ($image === null) {
+            return;
+        }
+
+        $this->removeImage();
+
+        $filename = uniqid(time()) . '.' . $image->extension();
+        // dd(get_class_methods($image));
+        $image->storeAs('uploads/images/', $filename);
+        $this->image_name = $filename;
+        $this->save();
     }
 
-    public function customFields()
+    public function getImage()
     {
-        return $this->hasMany(CustomField::class);
+        if ($this->image_name === null) {
+            return;
+        }
+
+        return '/uploads/images/' . $this->image_name;
+    }
+
+    public function removeImage()
+    {
+        if ($this->image_name !== null) {
+            Storage::delete('uploads/images/' . $this->image_name);
+        }
+    }
+
+    public function setSlug()
+    {
+        if ($this->slug === null) {
+            $this->slug = Str::slug($this->name);
+            $this->save();
+        }
     }
 }

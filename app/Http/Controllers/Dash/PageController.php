@@ -4,21 +4,24 @@ namespace App\Http\Controllers\Dash;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
-use App\Models\Meta;
 use App\Http\Requests\PageValidator;
+use Illuminate\Http\Request;
 
-class PageController extends Controller
+class PageController extends BasicController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Page $page, Request $request)
     {
-        $pages = Page::paginate(15);
+        $search = $request->get('search');
+        $limit = (int)$request->get('limit') ?: 20;
+        $pages = $search ? $page->query()->where('name', 'like', "%{$search}%")->paginate($limit) : $page->query()->paginate($limit);
+        $limits = $this->getLimits();
 
-        return view('dashboard.page.index', compact('pages'));
+        return view('dashboard.page.index', compact('pages', 'limits'));
     }
 
     /**
@@ -29,100 +32,88 @@ class PageController extends Controller
     public function create()
     {
         $page = new Page();
-        $meta = new Meta();
         $status = [
             'draft' => 'Draft',
             'publish' => 'Publish'
         ];
+        $submitName = 'Create';
 
-        return view('dashboard.page.create', compact('page', 'status', 'meta'));
+        return view('dashboard.page.create', compact('page', 'status', 'submitName'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(PageValidator $request)
     {
         $data = $request->validated();
 
-        $page = Page::create($data);
-        $meta = new Meta();
-        $meta->page_id = $page->id;
-        $meta->fill($data);
-        $meta->uploadImage($request->file('image'));
-        $meta->save();
+        $page = new Page($data);
+        $page->setSlug();
+        $page->uploadImage($request->file('image'));
+        $page->save();
 
-        return redirect()->route('pages.index')
-            ->with('success', 'The new Page was added successfully');
-    }
+        flash('The new Page was added successfully')->success();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Page $page)
-    {
-        //
+        return redirect()->route('pages.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param \App\Models\Page $page
      * @return \Illuminate\Http\Response
      */
     public function edit(Page $page)
     {
-        $meta = $page->meta;
-
         $status = [
             'draft' => 'Draft',
             'publish' => 'Publish'
         ];
+        $submitName = 'Edit';
 
-        return view('dashboard.page.edit', compact('page', 'status', 'meta'));
+        return view('dashboard.page.edit', compact('page', 'status', 'submitName'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Page $page
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(PageValidator $request, Page $page)
     {
         $data = $request->validated();
-        $meta = $page->meta;
 
-        $page->update($data);
-        $meta->fill($data);
-        $meta->uploadImage($request->file('image'));
-        $meta->save();
+        $page->fill($data);
+        $page->setSlug();
+        $page->uploadImage($request->file('image'));
+        $page->save();
 
-        return redirect()->route('pages.index')
-            ->with('success', 'The Page was updated successfully');
+        flash('The Page was updated successfully')->success();
+
+        return redirect()->route('pages.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Page $page
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Page $page)
     {
         if ($page) {
-            $page->meta->removeImage();
+            $page->removeImage();
             $page->delete();
         }
 
-        return redirect()->route('pages.index')
-            ->with('success', 'The Page was removed successfully');
+        flash('The Page was removed successfully')->success();
+
+        return redirect()->route('pages.index');
     }
 }

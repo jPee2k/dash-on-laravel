@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class CreatePagesTable extends Migration
 {
@@ -14,9 +15,19 @@ class CreatePagesTable extends Migration
     public function up()
     {
         Schema::create('pages', function (Blueprint $table) {
+            // main
             $table->id();
-            $table->string('name')->unique();
-            $table->string('status')->default('publish');
+            $table->string('name');
+            $table->string('slug');
+            $table->string('status')->default('draft');
+
+            // meta
+            $table->string('url');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('image_name')->nullable();
+            $table->text('keywords')->nullable();
+            $table->unique(['name', 'slug']);
             $table->timestamps();
         });
     }
