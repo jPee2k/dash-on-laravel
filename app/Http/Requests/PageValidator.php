@@ -33,7 +33,9 @@ class PageValidator extends FormRequest
             'url' => ['required', 'min:3', 'max:255'],
             'description' => ['nullable', 'min:3', 'max:8000'],
             'image_name' => ['image', 'nullable', 'max:512'],
-            'keywords' => ['nullable', 'min:3', 'max:8000']
+            'keywords' => ['nullable', 'min:3', 'max:8000'],
+            'content_title' => ['string', 'nullable', 'max:128'],
+            'content_data' => ['string', 'nullable', 'max:16000']
         ];
     }
 }

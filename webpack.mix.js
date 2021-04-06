@@ -30,3 +30,5 @@ mix.scripts([
 ], 'public/js/dash.js');
 mix.copy('resources/fonts', 'public/fonts');
 mix.copy('resources/img', 'public/img');
+// summernote - fonts
+mix.copy('resources/css/dash/font', 'public/css/font');

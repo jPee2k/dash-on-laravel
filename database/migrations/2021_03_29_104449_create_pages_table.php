@@ -27,6 +27,11 @@ class CreatePagesTable extends Migration
             $table->text('description')->nullable();
             $table->string('image_name')->nullable();
             $table->text('keywords')->nullable();
+
+            // content
+            $table->string('content_title', 128)->nullable();
+            $table->text('content_data')->nullable();
+
             $table->unique(['name', 'slug']);
             $table->timestamps();
         });

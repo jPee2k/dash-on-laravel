@@ -2,5 +2,9 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/dash.css": "/css/dash.css",
-    "/js/dash.js": "/js/dash.js"
+    "/js/dash.js": "/js/dash.js",
+    "/css/font/summernote.eot": "/css/font/summernote.eot",
+    "/css/font/summernote.ttf": "/css/font/summernote.ttf",
+    "/css/font/summernote.woff": "/css/font/summernote.woff",
+    "/css/font/summernote.woff2": "/css/font/summernote.woff2"
 }

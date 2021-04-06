@@ -11,7 +11,7 @@ class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status', 'slug', 'url', 'title', 'description', 'image_name', 'keywords'];
+    protected $fillable = ['name', 'status', 'slug', 'url', 'title', 'description', 'image_name', 'keywords', 'content_data', 'content_title'];
 
     public function uploadImage($image)
     {

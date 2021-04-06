@@ -21,6 +21,7 @@ class Admin
             return $next($request);
         }
 
-        redirect()->route('login');
+        abort(404);
+        // redirect()->route('login');
     }
 }
