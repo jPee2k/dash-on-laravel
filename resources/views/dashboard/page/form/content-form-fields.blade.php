@@ -8,9 +8,11 @@
     @endif
 </div>
 
-<textarea id="summernote" name="content_data"
-@if ($errors->has('content_data'))
-    {{ 'class="is-invalid"' }}
-@endif>
-    {{ $page->content_data }}
-</textarea>
+<div class="form-group">
+    @if ($errors->has('content_data'))
+        {{ Form::textarea('content_data', $page->content_data, ['class' => 'form-control is-invalid', 'id' => 'summernote', 'aria-describedby' => 'content-data-error', 'placeholder' => 'Enter the content', 'novalidate']) }}
+    @else
+        {{ Form::textarea('content_data', $page->content_data, ['class' => 'form-control', 'id' => 'summernote', 'aria-describedby' => 'content-data-error', 'placeholder' => 'Enter the content', 'novalidate']) }}
+    @endif
+</div>
+

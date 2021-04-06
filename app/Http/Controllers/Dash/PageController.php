@@ -58,7 +58,7 @@ class PageController extends BasicController
 
         flash('The new Page was added successfully')->success();
 
-        return redirect()->route('pages.index');
+        return redirect()->route('pages.edit', $page->id);
     }
 
     /**
@@ -96,7 +96,7 @@ class PageController extends BasicController
 
         flash('The Page was updated successfully')->success();
 
-        return redirect()->route('pages.index');
+        return redirect()->route('pages.edit', $page->id);
     }
 
     /**
