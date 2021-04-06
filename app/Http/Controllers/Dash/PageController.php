@@ -16,12 +16,16 @@ class PageController extends BasicController
      */
     public function index(Page $page, Request $request)
     {
-        $search = $request->get('search');
+        $search = $request->get('s');
         $limit = (int)$request->get('limit') ?: 20;
-        $pages = $search ? $page->query()->where('name', 'like', "%{$search}%")->paginate($limit) : $page->query()->paginate($limit);
+        $pages = $search
+            ? $page->query()->where('name', 'like', "%{$search}%")->paginate($limit)->withQueryString()
+            : $page->query()->paginate($limit)->withQueryString();
         $limits = $this->getLimits();
 
-        return view('dashboard.page.index', compact('pages', 'limits'));
+        $request->flash();
+
+        return view('dashboard.page.index', compact('pages', 'limits', 'limit'));
     }
 
     /**

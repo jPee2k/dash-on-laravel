@@ -11,6 +11,9 @@ setup:
 db-prepare:
 	php artisan migrate --seed
 
+list:
+	php artisan route:list
+
 db-refresh:
 	php artisan migrate:refresh --seed
 

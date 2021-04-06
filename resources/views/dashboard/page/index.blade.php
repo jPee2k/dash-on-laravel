@@ -8,7 +8,12 @@
         </div>
         <div class="card-body">
             <a href="{{ route('pages.create') }}"
-               class="btn btn-sm btn-outline-primary form-sbt float-right ml-2 mb-2 px-4">Add New</a>
+               class="btn btn-sm btn-outline-primary form-sbt float-right ml-2 mb-2 px-4">
+                Add New
+            </a>
+
+            @include('dashboard.shared.search')
+
             <div class="table-responsive">
 
                 <div id="pages_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
