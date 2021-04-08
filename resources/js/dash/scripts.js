@@ -15,3 +15,10 @@ $(function () {
         height: 100
     });
 });
+
+// function makeSlug(e){
+//     $.ajax(
+//
+//     )
+//     $('input[name="slug"]')
+// }

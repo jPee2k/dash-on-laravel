@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 class CreatePagesTable extends Migration
 {
@@ -18,21 +17,17 @@ class CreatePagesTable extends Migration
             // main
             $table->id();
             $table->string('name');
-            $table->string('slug');
             $table->string('status')->default('draft');
 
             // meta
-            $table->string('url');
-            $table->string('title');
             $table->text('description')->nullable();
             $table->string('image_name')->nullable();
             $table->text('keywords')->nullable();
 
             // content
-            $table->string('content_title', 128)->nullable();
+            $table->string('content_title');
             $table->text('content_data')->nullable();
 
-            $table->unique(['name', 'slug']);
             $table->timestamps();
         });
     }

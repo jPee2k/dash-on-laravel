@@ -1,5 +1,5 @@
 <div class="form-group">
-    {{ Form::label('content_title', 'Title') }}
+    {{ Form::label('content_title', 'Title') }} <i class="text-danger">*</i>
     {{ Form::text('content_title', $page->content_title, ['class' => 'form-control', 'aria-describedby' => 'content-title-error', 'placeholder' => 'Enter the title', 'novalidate']) }}
     @if ($errors->has('content_title'))
         <small id="content-title-error" class="form-text text-danger">

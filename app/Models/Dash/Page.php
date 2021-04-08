@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Dash;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status', 'slug', 'url', 'title', 'description', 'image_name', 'keywords', 'content_data', 'content_title'];
+    protected $fillable = ['name', 'status', 'description', 'image_name', 'keywords', 'content_title', 'content_data'];
 
     public function uploadImage($image)
     {
@@ -44,11 +43,13 @@ class Page extends Model
         }
     }
 
-    public function setSlug()
+    public function scopePages ($query)
     {
-        if ($this->slug === null) {
-            $this->slug = Str::slug($this->name);
-            $this->save();
-        }
+        return $query->select('id', 'name', 'status', 'created_at', 'updated_at')->orderBy('updated_at', 'DESC');
+    }
+
+    public function scopeSearch ($query, $search)
+    {
+        return $query->where('name', 'like', "%{$search}%");
     }
 }

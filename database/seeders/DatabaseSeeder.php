@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class
         ]);
 
-         \App\Models\Page::factory(150)->create();
+         \App\Models\Dash\Page::factory(150)->create();
     }
 }

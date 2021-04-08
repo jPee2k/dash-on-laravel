@@ -1,19 +1,9 @@
 <div class="form-group">
-    {{ Form::label('title', 'Title') }} <i class="text-danger">*</i>
-    {{ Form::text('title', $page->title, ['class' => 'form-control', 'aria-describedby' => 'title-error', 'placeholder' => 'Enter the Title', 'novalidate']) }}
-    @if ($errors->has('title'))
-        <small id="title-error" class="form-text text-danger">
-            {{ $errors->first('title') }}
-        </small>
-    @endif
-</div>
-
-<div class="form-group">
-    {{ Form::label('url', 'og: URL') }} <i class="text-danger">*</i>
-    {{ Form::text('url', $page->url, ['class' => 'form-control', 'aria-describedby' => 'url-error', 'placeholder' => 'Enter the URL', 'novalidate']) }}
-    @if ($errors->has('url'))
-        <small id="url-error" class="form-text text-danger">
-            {{ $errors->first('url') }}
+    {{ Form::label('slug', 'URI (slug)') }}
+    {{ Form::text('slug', $slug ?? '', ['class' => 'form-control', 'aria-describedby' => 'slug-error', 'placeholder' => 'Enter the URL', 'novalidate']) }}
+    @if ($errors->has('slug'))
+        <small id="slug-error" class="form-text text-danger">
+            {{ $errors->first('slug') }}
         </small>
     @endif
 </div>

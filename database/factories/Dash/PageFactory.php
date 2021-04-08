@@ -1,10 +1,9 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Dash;
 
-use App\Models\Page;
+use App\Models\Dash\Page;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class PageFactory extends Factory
 {
@@ -22,14 +21,10 @@ class PageFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique()->name;
-
         return [
-            'name' => $name,
-            'slug' => Str::slug($name),
+            'name' => $this->faker->unique()->name,
             'status' => $this->faker->randomElement(['draft', 'publish']),
-            'url' => $this->faker->url,
-            'title' => $this->faker->jobTitle,
+            'content_title' => $this->faker->jobTitle,
             'description' => $this->faker->text,
             'image_name' => null,
             'keywords' => null,

@@ -29,9 +29,6 @@
                                     <th tabindex="0" aria-controls="pages" rowspan="1" colspan="1" aria-sort="ascending"
                                         aria-label="Name: activate to sort column descending" style="width: 30%;">Name
                                     </th>
-                                    <th tabindex="0" aria-controls="pages" rowspan="1" colspan="1" aria-sort="ascending"
-                                        aria-label="Name: activate to sort column descending">Slug
-                                    </th>
                                     <th tabindex="0" aria-controls="pages" rowspan="1" colspan="1"
                                         aria-label="Status: activate to sort column ascending">Status
                                     </th>
@@ -39,7 +36,7 @@
                                         aria-label="Created_at: activate to sort column ascending">Created_at
                                     </th>
                                     <th tabindex="0" aria-controls="pages" rowspan="1" colspan="1"
-                                        aria-label="Updated_at: activate to sort column ascending">Updatet_at
+                                        aria-label="Updated_at: activate to sort column ascending">Updated_at
                                     </th>
                                     <th tabindex="0" aria-controls="pages" rowspan="1" colspan="1"
                                         aria-label="Updated_at: activate to sort column ascending">Actions
@@ -48,10 +45,9 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($pages as $key => $page)
-                                    <tr role="row" class="{{ \App\Services\helpers\is_even($key) ? 'even' : 'odd' }}">
+                                    <tr role="row" class="{{ $helper->is_even($key) ? 'even' : 'odd' }}">
                                         <td>{{ $page->id }}</td>
                                         <td>{{ $page->name }}</td>
-                                        <td>{{ $page->slug }}</td>
                                         <td>{{ $page->status }}</td>
                                         <td>{{ $page->created_at }}</td>
                                         <td>{{ $page->updated_at }}</td>

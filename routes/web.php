@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\Admin;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,5 +34,11 @@ Route::group(
 
         Route::resource('pages', \App\Http\Controllers\Dash\PageController::class)
             ->except('show');
+
+        Route::group(['prefix' => 'helper'], function () { // admin/helper/make-slug
+            Route::get('make-slug', function () {
+                return \Illuminate\Support\Str::slug(request()->post('str'));
+            });
+        });
     }
 );
