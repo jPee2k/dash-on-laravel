@@ -28,6 +28,11 @@
                 <div class="tab-pane fade col-md-12 col-lg-9" id="nav-content" role="tabpanel" aria-labelledby="nav-content-tab">
                     @include('dashboard.page.form.content-form-fields')
                 </div>
+
+                {{-- custom-fields tab --}}
+                <div class="tab-pane fade col-md-12 col-lg-9" id="nav-fields" role="tabpanel" aria-labelledby="nav-fields-tab">
+                    @include('dashboard.page.form.custom-form-fields')
+                </div>
             </div>
         </div>
         <div class="card-footer bg-white text-right">
