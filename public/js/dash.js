@@ -23752,11 +23752,12 @@ $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 $(function () {
     $('#summernote').summernote({
         airMode: false,
-        tabsize: 2,
-        height: 100
+        tabsize: 4,
+        height: 300
     });
 });
 
+// TODO ajax make slug
 // function makeSlug(e){
 //     $.ajax(
 //

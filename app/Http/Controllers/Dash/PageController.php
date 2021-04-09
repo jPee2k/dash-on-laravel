@@ -59,7 +59,7 @@ class PageController extends BasicController
         $isSavedPage = $page->save();
 
         if ($isSavedPage) {
-            $slug = $request->has('slug') ? $request->post('slug') : Str::slug($page->name);
+            $slug = $request->input('slug') ?: Str::slug($page->name);
             $isSavedRoute = $route->setSlug($slug, 'page', $page->id);
         }
 
@@ -103,7 +103,7 @@ class PageController extends BasicController
 
         if ($isSavedPage) {
             $route->removeSlug('page', $page->id);
-            $slug = $request->has('slug') ? $request->post('slug') : Str::slug($page->name);
+            $slug = $request->input('slug') ?: Str::slug($page->name);
             $isSavedRoute = $route->setSlug($slug, 'page', $page->id);
         }
 
@@ -128,9 +128,9 @@ class PageController extends BasicController
     {
         if ($page) {
             $page->removeImage();
-            $page->delete();
-
             $route->removeSlug('page', $page->id);
+
+            $page->delete();
         }
 
         flash('The Page was removed successfully')->success();
