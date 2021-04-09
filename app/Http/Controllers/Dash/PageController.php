@@ -135,4 +135,18 @@ class PageController extends BasicController
 
         return redirect()->route('pages.index');
     }
+
+    public function removeImage($id)
+    {
+        $page = Page::findOrFail($id);
+
+        if ($page->image_name) {
+            $this->imageUploader->removeImage($page);
+            $page->image_name = null;
+            $page->save();
+        }
+
+        flash('The Image was delete successfully')->success();
+        return redirect()->back();
+    }
 }

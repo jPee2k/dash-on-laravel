@@ -19,8 +19,12 @@
 </div>
 
 @isset($page->image_name)
-    <div class="border rounded mb-4">
+    <div class="show-image border rounded mb-4">
         <img class="img-fluid" src="{{ $imageUploader->getWebpImage($page->image_name) }}" alt="og:image">
+        <a href="{{ route('pages.removeImage', $page->id) }}" class="close-button close" aria-label="Close"
+           data-confirm="Вы уверены?" data-method="delete" rel="nofollow">
+            <span aria-hidden="true">&times;</span>
+        </a>
     </div>
 @endisset
 <div class="custom-file form-group">

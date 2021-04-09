@@ -35,6 +35,9 @@ Route::group(
         Route::resource('pages', \App\Http\Controllers\Dash\PageController::class)
             ->except('show');
 
+        Route::delete('remove-image/{id}', [\App\Http\Controllers\Dash\PageController::class, 'removeImage'])
+            ->name('pages.removeImage');
+
 //        Route::group(['prefix' => 'helper'], function () { // admin/helper/make-slug
 //            Route::get('make-slug', function () {
 //                return \Illuminate\Support\Str::slug(request()->post('str'));

@@ -22803,3 +22803,17 @@ dl li {
 /**
  * Custom styles
  */
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+.show-image {
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    right: 6px;
+    top: 3px;
+}
