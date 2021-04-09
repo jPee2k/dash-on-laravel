@@ -6,7 +6,6 @@ use App\Http\Requests\PageValidator;
 use App\Models\Dash\Page;
 use App\Models\Dash\Route;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PageController extends BasicController
@@ -55,7 +54,7 @@ class PageController extends BasicController
         $data = $request->validated();
 
         $page = new Page($data);
-        $page->uploadImage($request->file('image'));
+        $this->imageUploader->uploadImage($page, $request->file('image'));
         $isSavedPage = $page->save();
 
         if ($isSavedPage) {
@@ -98,7 +97,7 @@ class PageController extends BasicController
         $data = $request->validated();
 
         $page->fill($data);
-        $page->uploadImage($request->file('image'));
+        $this->imageUploader->uploadImage($page, $request->file('image'));
         $isSavedPage = $page->save();
 
         if ($isSavedPage) {
@@ -115,7 +114,6 @@ class PageController extends BasicController
         return redirect()->back()->withErrors(['error' => 'Something went wrong']);
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -127,7 +125,7 @@ class PageController extends BasicController
     public function destroy(Page $page, Route $route)
     {
         if ($page) {
-            $page->removeImage();
+            $this->imageUploader->removeImage($page);
             $route->removeSlug('page', $page->id);
 
             $page->delete();

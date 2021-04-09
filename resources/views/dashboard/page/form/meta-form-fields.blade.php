@@ -20,7 +20,7 @@
 
 @isset($page->image_name)
     <div class="border rounded mb-4">
-        <img class="img-fluid" src="{{ $page->getImage() }}" alt="og:image">
+        <img class="img-fluid" src="{{ $imageUploader->getWebpImage($page->image_name) }}" alt="og:image">
     </div>
 @endisset
 <div class="custom-file form-group">
