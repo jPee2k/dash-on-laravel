@@ -1,5 +1,3 @@
-{{ Form::open(['url' => route('pages.index'), 'method' => 'GET', 'autocomplete' => 'off']) }}
-
 <div class="form-group float-left shadow-none mb-2 mr-2 p-0">
     <select class="form-control form-control-sm" name="limit" onchange='this.form.submit();'>
         @foreach($limits as $currLimit)
@@ -22,5 +20,3 @@
         </svg>
     </button>
 </div>
-{{ Form::close() }}
-

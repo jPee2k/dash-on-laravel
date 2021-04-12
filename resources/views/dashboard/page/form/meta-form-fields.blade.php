@@ -28,8 +28,8 @@
     </div>
 @endisset
 <div class="custom-file form-group">
-    <label class="custom-file-label" for="image">og: Image</label>
-    {{ Form::file('image', ['class' => 'custom-file-input form-control']) }}
+    {{ Form::label('image', 'og: Image', ['class' => 'custom-file-label']) }}
+    {{ Form::file('image', ['class' => 'custom-file-input form-control', 'id' => 'image']) }}
     @if ($errors->has('image'))
         <small id="image-error" class="form-text text-danger">
             {{ $errors->first('image') }}
@@ -39,7 +39,7 @@
 
 <div class="form-group">
     {{ Form::label('keywords', 'Keywords') }}
-    {{ Form::textarea('keywords', $page->keywords, ['class' => 'form-control', 'aria-describedby' => 'keywords-error', 'placeholder' => 'Enter keywords separated by commas', 'novalidate']) }}
+    {{ Form::textarea('keywords', $page->keywords, ['class' => 'form-control', 'aria-describedby' => 'keywords-error', 'placeholder' => 'Enter keywords separated by commas or spaces', 'novalidate']) }}
     @if ($errors->has('keywords'))
         <small id="keywords-error" class="form-text text-danger">
             {{ $errors->first('keywords') }}

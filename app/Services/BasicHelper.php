@@ -19,11 +19,26 @@ class BasicHelper
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getStatuses(): array
     {
         return [
             'draft' => 'Draft',
             'publish' => 'Publish'
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCustomFieldsList (): array
+    {
+        return [
+            'text' => 'Text',
+            'textarea' => 'Textarea',
+            'image' => 'Image',
         ];
     }
 

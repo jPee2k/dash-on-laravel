@@ -12,7 +12,9 @@
                 Add New
             </a>
 
-            @include('dashboard.shared.search')
+            {{ Form::open(['url' => route('pages.index'), 'method' => 'GET', 'autocomplete' => 'off']) }}
+                @include('dashboard.shared.search')
+            {{ Form::close() }}
 
             <div class="table-responsive">
 

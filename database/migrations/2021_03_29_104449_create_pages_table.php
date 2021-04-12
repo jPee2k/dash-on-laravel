@@ -16,16 +16,19 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             // main
             $table->id();
-            $table->string('name');
-            $table->string('status')->default('draft');
+            $table->string('name', 191)->index();
+            $table->string('status', 32)->default('draft');
+
+            // template
+            $table->bigInteger('template_id')->nullable();
 
             // meta
             $table->text('description')->nullable();
-            $table->string('image_name')->nullable();
+            $table->string('image_name', 191)->nullable();
             $table->text('keywords')->nullable();
 
             // content
-            $table->string('content_title');
+            $table->string('content_title', 191);
             $table->text('content_data')->nullable();
 
             $table->timestamps();

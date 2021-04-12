@@ -46,16 +46,21 @@
             </div>
             <div class="nav-wrapper">
                 <ul class="nav">
-                    <li class="nav-header">General</li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard.index') }}">
-                            <span class="menu-title">Dashboard</span>
-                        </a>
-                    </li>
+{{--                    <li class="nav-header">General</li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{ route('dashboard.index') }}">--}}
+{{--                            <span class="menu-title">Dashboard</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     <li class="nav-header">Content</li>
                     <li class="nav-item">
                         <a href="{{ route('pages.index') }}" class="nav-link">
                             <span class="menu-title">Pages</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('templates.index') }}" class="nav-link">
+                            <span class="menu-title">Templates</span>
                         </a>
                     </li>
                 </ul>

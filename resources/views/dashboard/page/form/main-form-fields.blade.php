@@ -1,6 +1,6 @@
 <div class="form-group">
     {{ Form::label('name', 'Name') }} <i class="text-danger">*</i>
-    {{ Form::text('name', $page->name, ['class' => 'form-control', 'aria-describedby' => 'name-error', 'placeholder' => 'Enter the name', 'novalidate', 'oninput' => 'makeSlug(this)']) }}
+    {{ Form::text('name', $page->name, ['class' => 'form-control', 'aria-describedby' => 'name-error', 'placeholder' => 'Enter the name', 'novalidate', /* 'oninput' => 'makeSlug(this)' */]) }}
     @if ($errors->has('name'))
         <small id="name-error" class="form-text text-danger">
             {{ $errors->first('name') }}

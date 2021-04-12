@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateTemplateFieldsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('template_fields', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('template_id')->constrained()->onDelete('cascade');
             $table->string('name', 191);
-            $table->string('email', 191)->unique();
-            $table->string('role', 32)->default('user');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password', 191);
-            $table->rememberToken();
+            $table->string('prefix', 191)->unique();
+            $table->string('type', 191);
             $table->timestamps();
 
-            $table->index(['email', 'role']);
+            $table->index('prefix');
         });
     }
 
@@ -34,6 +32,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('template_fields');
     }
 }
