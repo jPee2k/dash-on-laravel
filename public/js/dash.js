@@ -23757,6 +23757,58 @@ $(function () {
     });
 });
 
+// show\hide field form on template page
+const $fieldFormWrapper = $('#field-form');
+const $fieldFormBtn = $('#add-form-field');
+
+$fieldFormBtn.click(function () {
+    if ($fieldFormWrapper.css('display') === 'none') {
+        $fieldFormWrapper.show();
+        $fieldFormBtn.text('Hide');
+    } else {
+        $fieldFormWrapper.hide();
+        $fieldFormBtn.text('Add field');
+    }
+});
+
+const $saveFieldBtn = $('#field-edit .form-sbt');
+
+$saveFieldBtn.click(function (e) {
+    e.preventDefault(0);
+
+    const $fieldForm = document.getElementById('field-edit');
+    const formData = new FormData($fieldForm);
+    const token = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+            url: '/admin/fields',
+            type: 'POST',
+
+            headers: {
+                'X-CSRF-Token': token
+            },
+
+            data: formData,
+            dataType: 'json',
+            cache: false,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                if (typeof response.info !== 'undefined') {
+                    console.log(response.info);
+                }
+            },
+
+            error: function (response) {
+                if (typeof response.errors !== 'undefined') {
+                    console.log(response.errors);
+                }
+            }
+        }
+    );
+});
+
 // TODO ajax make slug
 // function makeSlug(e){
 //     $.ajax(

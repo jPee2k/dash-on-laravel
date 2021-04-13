@@ -31,6 +31,14 @@ class BasicHelper
     }
 
     /**
+     * @return array
+     */
+    public function getStatusKeys (): array
+    {
+        return array_keys($this->getStatuses());
+    }
+
+    /**
      * @return string[]
      */
     public function getCustomFieldsList (): array
@@ -40,6 +48,11 @@ class BasicHelper
             'textarea' => 'Textarea',
             'image' => 'Image',
         ];
+    }
+
+    public function getCustomFieldKeys (): array
+    {
+        return array_keys($this->getCustomFieldsList());
     }
 
     /**

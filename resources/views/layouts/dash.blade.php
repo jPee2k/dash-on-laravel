@@ -11,6 +11,10 @@
 
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicons/favicon-32x32.png') }}">
     <link rel="stylesheet" href="{{ asset('css/dash.css') }}">
+
+    <script>
+        const adminUrl = "{{ url('/admin') }}";
+    </script>
 </head>
 
 <body>

@@ -6,14 +6,15 @@
         <div class="card-header">
             <h5 class="card-title">Create Template</h5>
         </div>
-        {{ Form::model($template, ['method' => 'POST', 'url' => route('templates.store', $template), 'role' => 'form', 'autocomplete' => 'off']) }}
+
         <div class="card-body">
+            {{ Form::model($template, ['method' => 'POST', 'url' => route('templates.store', $template), 'id' => 'template-edit', 'role' => 'form', 'autocomplete' => 'off']) }}
             @include('dashboard.template.form')
+            {{ Form::close() }}
+
+            <div class="card-footer bg-white text-right">
+                <button type="submit" form="template-edit" class="btn btn-primary mr-2">{{ $submitName }}</button>
+                <button type="reset" form="template-edit" class="btn btn-light">Cancel</button>
+            </div>
         </div>
-        <div class="card-footer bg-white text-right">
-            <button type="submit" class="btn btn-primary mr-2">{{ $submitName }}</button>
-            <button type="reset" class="btn btn-light">Cancel</button>
-        </div>
-        {{ Form::close() }}
-    </div>
 @endsection

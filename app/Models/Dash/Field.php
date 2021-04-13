@@ -6,12 +6,13 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Template extends Model
+class Field extends Model
 {
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = ['name', 'prefix'];
+    protected $fillable = ['name', 'prefix', 'type', 'template_id'];
+    protected $table = 'template_fields';
 
     /**
      * Return the sluggable configuration array for this model.
@@ -31,15 +32,10 @@ class Template extends Model
 
     /**
      * o-2-m -> Template - Fields
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function fields(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function template(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(Field::class);
-    }
-
-    public function scopeSearch($query, $search)
-    {
-        return $query->where('name', 'like', "%{$search}%");
+        return $this->belongsTo(Template::class);
     }
 }

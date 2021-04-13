@@ -70,8 +70,9 @@ class TemplateController extends BasicController
     public function edit(Template $template)
     {
         $submitName = 'Edit';
+        $fields = $template->fields();
 
-        return view('dashboard.template.edit', compact('template', 'submitName'));
+        return view('dashboard.template.edit', compact('template', 'submitName', 'fields'));
     }
 
     /**

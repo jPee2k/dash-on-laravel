@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Services\BasicHelper;
 
 class PageValidator extends FormRequest
 {
@@ -25,9 +26,11 @@ class PageValidator extends FormRequest
      */
     public function rules()
     {
+        $helper = new BasicHelper();
+
         return [
             'name' => ['required', 'string', 'max:191', 'min:3'],
-            'status' => [Rule::in(['publish', 'draft']), 'required'],
+            'status' => [Rule::in($helper->getStatusKeys()), 'required'],
             'description' => ['nullable', 'min:3', 'max:8000'],
             'image_name' => ['image', 'nullable', 'max:512'],
             'keywords' => ['nullable', 'min:3', 'max:8000'],
