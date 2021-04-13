@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="app" class="main-container">
+    <div class="main-container">
         <div class="container-fluid page-body-wrapper">
 
             @include('dashboard.shared.menu')
