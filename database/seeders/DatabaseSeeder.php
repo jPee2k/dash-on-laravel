@@ -15,9 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
         ]);
 
-         \App\Models\Dash\Page::factory(150)->create();
+         \App\Models\Dash\Page::factory(30)->create();
+         \App\Models\Dash\Template::factory(10)->create();
     }
 }

@@ -24,9 +24,11 @@ class TemplateValidator extends FormRequest
      */
     public function rules()
     {
+        $id = isset($this->template->id) ? $this->template->id : '';
+
         return [
             'name' => 'required|string|min:3|max:191',
-            'prefix' => 'string|nullable|max:191|unique:templates,prefix,' . $this->template->id,
+            'prefix' => 'string|nullable|max:191|unique:templates,prefix,' . $id,
         ];
     }
 }
