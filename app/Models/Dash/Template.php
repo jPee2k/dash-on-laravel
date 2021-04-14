@@ -38,6 +38,27 @@ class Template extends Model
         return $this->hasMany(Field::class);
     }
 
+
+    public function buildHtml($fields): string
+    {
+        $html = "";
+
+        if (is_array($fields)) {
+            foreach ($fields as $field) {
+                $html .= $this->generateHtmlField($field);
+            }
+        }
+
+        return $html;
+    }
+
+    public function generateHtmlField($field)
+    {
+        // render html from view
+        return view('dashboard.template.exist-fields', compact('field'))
+            ->render();
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('name', 'like', "%{$search}%");

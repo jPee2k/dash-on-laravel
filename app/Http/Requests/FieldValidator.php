@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 
 class FieldValidator extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,9 +31,9 @@ class FieldValidator extends FormRequest
         $id = isset($this->field->id) ? $this->field->id : '';
 
         return [
-            'name' => 'required|string|max:191|min:3',
-            'prefix' => 'string|nullable|max:191|unique:fields,prefix,' . $id,
-            'type' => [Rule::in($helper->getCustomFieldKeys()), 'required'],
+            'field-type' => [Rule::in($helper->getCustomFieldKeys()), 'required'],
+            'field-name' => 'required|string|max:191|min:3',
+            'field-prefix' => 'string|nullable|max:191|unique:template_fields,prefix,' . $id,
             'template_id' => 'required|numeric|between:1,99999999',
         ];
     }

@@ -12,11 +12,15 @@
             @include('dashboard.template.form')
             {{ Form::close() }}
 
-            <div id="field-form" class="col-md-9 col-lg-6 border border-primary rounded m-2 mb-4 px-4 pt-3 bg-light">
+            {{--Insert all fields for this template--}}
+            <div id="fields" data-url="{{ route('templates.fields', $template->id) }}"></div>
+
+            <div id="field-form"
+                 class="col-md-9 col-lg-6 border border-primary rounded m-2 mb-4 px-4 pt-3 bg-light">
                 <p class="h5 mb-4 text-center">New Field</p>
 
-                {{ Form::open(['method' => 'POST', 'url' => route('fields.store'), 'files' => true, 'id' => 'field-edit', 'role' => 'form', 'autocomplete' => 'off']) }}
-                @include('dashboard.template.field')
+                {{ Form::open(['method' => 'POST', 'url' => route('fields.store'), 'data-url' => route('fields.store'), 'files' => true, 'id' => 'field-edit', 'role' => 'form', 'autocomplete' => 'off']) }}
+                @include('dashboard.template.form-fields')
                 <div class="col text-right">
                     <button type="submit" class="btn btn-sm btn-outline-primary form-sbt mb-4 px-4">
                         Save Field

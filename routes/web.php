@@ -41,12 +41,16 @@ Route::group(
         Route::resource('templates', \App\Http\Controllers\Dash\TemplateController::class)
             ->except('show');
 
+        Route::post('templates/get-template-fields/{id}', [\App\Http\Controllers\Dash\TemplateController::class, 'getTemplateFields'])
+            ->name('templates.fields');
+
         Route::resource('fields', \App\Http\Controllers\Dash\FieldController::class);
 
-//        Route::group(['prefix' => 'helper'], function () { // admin/helper/make-slug
-//            Route::get('make-slug', function () {
-//                return \Illuminate\Support\Str::slug(request()->post('str'));
-//            });
-//        });
+        // admin/helper/...
+        Route::group(['prefix' => 'helper'], function () {
+            Route::get('make-slug', function () {
+                return \Illuminate\Support\Str::slug(request()->post('str'));
+            });
+        });
     }
 );

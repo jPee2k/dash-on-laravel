@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Dash;
 
-use App\Models\Dash\Template;
 use App\Http\Requests\TemplateValidator;
+use App\Models\Dash\Template;
+use App\Models\Dash\Field;
 use Illuminate\Http\Request;
 
 class TemplateController extends BasicController
@@ -45,7 +46,7 @@ class TemplateController extends BasicController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(TemplateValidator $request)
@@ -64,22 +65,22 @@ class TemplateController extends BasicController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Dash\Template  $template
+     * @param \App\Models\Dash\Template $template
      * @return \Illuminate\Http\Response
      */
     public function edit(Template $template)
     {
         $submitName = 'Edit';
-        $fields = $template->fields();
+        // $fields = $template->fields()->get()->all();
 
-        return view('dashboard.template.edit', compact('template', 'submitName', 'fields'));
+        return view('dashboard.template.edit', compact('template', 'submitName'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dash\Template  $template
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Dash\Template $template
      * @return \Illuminate\Http\Response
      */
     public function update(TemplateValidator $request, Template $template)
@@ -97,7 +98,7 @@ class TemplateController extends BasicController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Dash\Template  $template
+     * @param \App\Models\Dash\Template $template
      * @return \Illuminate\Http\Response
      */
     public function destroy(Template $template)
@@ -109,5 +110,22 @@ class TemplateController extends BasicController
         }
 
         return redirect()->route('templates.index');
+    }
+
+    /**
+     * @param $templateId
+     * @return string
+     */
+    public function getTemplateFields($templateId): string
+    {
+        $template = Template::find($templateId);
+
+        if ($template) {
+            $fields = $template->fields()->get()->all();
+
+            return $template->buildHtml($fields);
+        }
+
+        return redirect()->back();
     }
 }
