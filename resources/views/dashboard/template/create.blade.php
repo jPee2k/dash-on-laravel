@@ -14,7 +14,8 @@
 
             <div class="card-footer bg-white text-right">
                 <button type="submit" form="template-edit" class="btn btn-primary mr-2">{{ $submitName }}</button>
-                <button type="reset" form="template-edit" class="btn btn-light">Cancel</button>
+                <button type="reset" form="template-edit" class="btn btn-outline-primary">Cancel</button>
             </div>
         </div>
+    </div>
 @endsection

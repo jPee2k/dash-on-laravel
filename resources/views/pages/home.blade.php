@@ -17,4 +17,6 @@
 {{--    <h1>Homepage</h1>--}}
 {{--@endsection--}}
 
-<h1><a href="{{ route('dashboard.index') }}">Dashboard</a></h1>
+{{--<h1><a href="{{ route('dashboard.index') }}">Dashboard</a></h1>--}}
+<p>This page is empty yet</p>
+<a href="{{ route('pages.index') }}">go to dashboard</a>

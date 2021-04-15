@@ -16,7 +16,7 @@
             <div id="fields" data-url="{{ route('templates.fields', $template->id) }}"></div>
 
             <div id="field-form"
-                 class="col-md-9 col-lg-6 border border-primary rounded m-2 mb-4 px-4 pt-3 bg-light">
+                 class="col-md-9 col-lg-6 border border-primary rounded m-2 mb-4 px-4 pt-3">
                 <p class="h5 mb-4 text-center">New Field</p>
 
                 {{ Form::open(['method' => 'POST', 'url' => route('fields.store'), 'data-url' => route('fields.store'), 'files' => true, 'id' => 'field-edit', 'role' => 'form', 'autocomplete' => 'off']) }}
@@ -32,7 +32,8 @@
             <div class="card-footer bg-white text-right">
                 <button id="add-form-field" class="btn btn-primary mr-2 float-left">Add field</button>
                 <button type="submit" form="template-edit" class="btn btn-primary mr-2">{{ $submitName }}</button>
-                <button type="reset" form="template-edit" class="btn btn-light">Cancel</button>
+                <button type="reset" form="template-edit" class="btn btn-outline-primary">Cancel</button>
             </div>
         </div>
+    </div>
 @endsection

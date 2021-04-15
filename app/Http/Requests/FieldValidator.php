@@ -31,9 +31,9 @@ class FieldValidator extends FormRequest
         $id = isset($this->field->id) ? $this->field->id : '';
 
         return [
-            'field-type' => [Rule::in($helper->getCustomFieldKeys()), 'required'],
-            'field-name' => 'required|string|max:191|min:3',
-            'field-prefix' => 'string|nullable|max:191|unique:template_fields,prefix,' . $id,
+            'type' => [Rule::in($helper->getCustomFieldKeys()), 'required'],
+            'name' => 'required|string|max:191|min:3',
+            'prefix' => 'string|nullable|max:191|unique:template_fields,prefix,' . $id,
             'template_id' => 'required|numeric|between:1,99999999',
         ];
     }

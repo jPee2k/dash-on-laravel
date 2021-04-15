@@ -37,7 +37,7 @@
         </div>
         <div class="card-footer bg-white text-right">
             <button type="submit" class="btn btn-primary mr-2">{{ $submitName }}</button>
-            <button type="reset" class="btn btn-light">Cancel</button>
+            <button type="reset" class="btn btn-outline-primary">Cancel</button>
         </div>
         {{ Form::close() }}
     </div>

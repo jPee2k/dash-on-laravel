@@ -1,6 +1,9 @@
 // token
 const token = $('meta[name="csrf-token"]').attr('content');
 
+// useful const
+const $fieldsWrapper = $('#fields');
+
 // uploading image-name
 $(".custom-file-input").on("change", function () {
     var fileName = $(this).val().split("\\").pop();
@@ -59,13 +62,66 @@ function hideBlock(wrapper, button, text) {
     button.text(text);
 }
 
-function getSuccessAlert() {
+function touchFieldBlock(id) {
+    const $hiddenField = $('.field-area .field-' + id);
+    const $minus = $('.field-area-' + id + ' .roll-up-buttons .minus');
+    const $plus = $('.field-area-' + id + ' .roll-up-buttons .plus');
+    const $title = $('.field-area-' + id + ' .field-title');
+
+    if ($hiddenField.css('display') === 'none') {
+        // show
+        $plus.hide();
+        $minus.show();
+
+        $hiddenField.show();
+        $title.hide();
+    } else {
+        // hide
+        $minus.hide();
+        $plus.show();
+
+        $hiddenField.hide();
+        $title.show();
+    }
+}
+
+function getSuccessAlert(title = 'The field has been saved') {
     Swal.fire({
         // position: 'top-end',
         type: 'success',
-        title: 'The field has been saved',
+        title: title,
         showConfirmButton: true,
-        timer: 3000
+        timer: 3000,
+    });
+}
+
+function getErrorAlert(title = 'Oops!...', text = 'Something went wrong!') {
+    Swal.fire({
+        type: 'error',
+        title: title,
+        text: ' ' + text,
+        timer: 3000,
+        // footer: '<a href>Why do I have this issue?</a>'
+    });
+}
+
+function confirmAction() {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-danger',
+            cancelButton: 'btn btn-primary'
+        },
+        buttonsStyling: false,
+    });
+
+    return swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
     });
 }
 
@@ -79,9 +135,10 @@ function clearFields(array) {
     });
 }
 
-const $saveFieldBtn = $('#field-edit .form-sbt');
-let isSend = false;
+var isSend = false; // for ajax
 
+// Save New Field uses Ajax Form
+const $saveFieldBtn = $('#field-edit .form-sbt');
 $saveFieldBtn.click(function (e) {
     e.preventDefault(0);
     addLoader();
@@ -110,14 +167,15 @@ $saveFieldBtn.click(function (e) {
 
                 success: function (response) {
                     if (typeof response.info !== 'undefined' && response.info === 'success') {
-                        getSuccessAlert();
                         hideBlock($fieldFormWrapper, $fieldFormBtn, 'Add field');
 
-                        const $fieldName = $('#field-edit input[name="field-name"]');
-                        const $fieldPrefix = $('#field-edit input[name="field-prefix"]');
-                        const $fieldType = $('#field-edit select[name="field-type"]');
+                        const $fieldName = $('#field-edit input[name="name"]');
+                        const $fieldPrefix = $('#field-edit input[name="prefix"]');
+                        const $fieldType = $('#field-edit select[name="type"]');
 
                         clearFields([$fieldName, $fieldPrefix, $fieldType]);
+                        getExistFields($fieldsWrapper);
+                        getSuccessAlert();
                     }
 
                     isSend = false;
@@ -146,18 +204,144 @@ $saveFieldBtn.click(function (e) {
             }
         );
     }
-
 });
+
+// Update Field uses Ajax Form
+function updateField(e, id) {
+    e.preventDefault(0);
+    addLoader();
+
+    const $fieldForm = document.getElementById('field-update-' + id);
+    const formData = new FormData($fieldForm);
+
+    const url = $('#field-update-' + id).data('url');
+
+    if (!isSend) {
+        isSend = true;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+
+            headers: {
+                'X-CSRF-Token': token
+            },
+
+            data: formData,
+            dataType: 'json',
+            cache: false,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                if (typeof response.info !== 'undefined' && response.info === 'success') {
+
+                    const $fieldPrefix = $('#prefix-' + id);
+
+                    if (isset(response.prefix)) {
+                        $fieldPrefix.val(response.prefix);
+                    }
+
+                    if (isset(response.name) && isset(response.type)) {
+                        $('.field-area-' + id + ' .field-title').text(`${response.type} - ${response.name}`);
+                    }
+
+                    getSuccessAlert();
+                }
+
+                isSend = false;
+                removeLoader();
+            },
+
+            error: function (response) {
+                if (typeof response.responseJSON.errors !== 'undefined') {
+                    const errorsObj = response.responseJSON.errors;
+
+                    Object.keys(errorsObj).forEach(function (key) {
+                        let errorItems = errorsObj[key];
+                        let errorMessage = (typeof errorItems[0] !== 'undefined') ? errorItems[0] : '';
+
+                        let $errorMessage = $('<small class="text-danger">' + errorMessage + '</small>');
+                        let $currInput = $('#field-update-' + id + ' *[name=' + key + ']').closest('.form-group');
+                        $errorMessage.appendTo($currInput).delay(3000).slideUp(800, function () {
+                            $errorMessage.remove();
+                        });
+                    });
+                }
+
+                isSend = false;
+                removeLoader();
+            }
+        });
+    }
+}
+
+// Remove Field uses Ajax Form
+function removeField(e, id) {
+    e.preventDefault(0);
+
+    confirmAction().then(function (result) {
+        if (result.value !== true) {
+            return false;
+        }
+
+        addLoader();
+
+        const $fieldForm = document.getElementById('field-delete-' + id);
+        const formData = new FormData($fieldForm);
+
+        const url = $('#field-delete-' + id).data('url');
+
+        if (!isSend) {
+            isSend = true;
+
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+
+                headers: {
+                    'X-CSRF-Token': token
+                },
+
+                data: formData,
+                dataType: 'json',
+                cache: false,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    if (typeof response.info !== 'undefined' && response.info === 'success') {
+                        $('.field-area-' + id).remove();
+                        getSuccessAlert('The field has been deleted');
+                    }
+
+                    isSend = false;
+                    removeLoader();
+                },
+
+                error: function (response) {
+                    if (response) {
+                        getErrorAlert();
+                    }
+
+                    isSend = false;
+                    removeLoader();
+                }
+            });
+        }
+    });
+
+}
 
 // Insert fields in view -> dashboard.template.edit
 $(function () {
-    const $fieldsWrapper = $('#fields');
-
-    if (!$fieldsWrapper.length) {
-        return false;
+    if ($fieldsWrapper.length) {
+        getExistFields($fieldsWrapper);
     }
+});
 
-    const url = $fieldsWrapper.data('url');
+function getExistFields($wrapper) {
+    const url = $wrapper.data('url');
 
     $.ajax({
         url: url,
@@ -176,59 +360,8 @@ $(function () {
             //
         }
     });
-});
+}
 
-// TODO ajax make slug
-// function makeSlug(e){
-//     $.ajax(
-//
-//     )
-//     $('input[name="slug"]')
-// }
-
-// custom fields
-// const $customFieldsArea = $('#custom-fields-area');
-// let textInputsCounter = 1;
-// let textareasCounter = 1;
-// let imageInputsCounter = 1;
-//
-// $('.dropdown .dropdown-menu #text').click(function () {
-//     const $element =
-//         '<div class="form-group">' +
-//             '<label for="text' + textInputsCounter + '">Text</label>' +
-//             '<input placeholder="Enter the custom text" novalidate="novalidate" name="text[]" type="text" id="text' + textInputsCounter + '" class="form-control">' +
-//         '</div>';
-//
-//     $customFieldsArea.append($element);
-//     textInputsCounter++;
-// });
-//
-// $('.dropdown .dropdown-menu #textarea').click(function () {
-//     const asd = $('<textarea class="summernote form-control" placeholder="Insert the custom data" novalidate="novalidate" name="textarea[]" cols="50" rows="10"></textarea>');
-//
-//
-//     asd.summernote({
-//         airMode: false,
-//         tabsize: 4,
-//         height: 300
-//     });
-//
-//     const $element =
-//         '<div class="form-group">' +
-//         asd.innerText +
-//         '</div>';
-//
-//     $customFieldsArea.append($element);
-//     textareasCounter++;
-// });
-//
-// $('.dropdown .dropdown-menu #image').click(function () {
-//     const $element =
-//         '<div class="custom-file form-group">' +
-//             '<label for="image' + imageInputsCounter + '" class="custom-file-label">Image</label>' +
-//             '<input name="image[]" type="file" id="image' + imageInputsCounter + '" class="custom-file-input form-control">' +
-//         '</div>';
-//
-//     $customFieldsArea.append($element);
-//     imageInputsCounter++;
-// });
+function isset(value) {
+    return typeof value !== 'undefined';
+}

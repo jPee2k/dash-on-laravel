@@ -2,91 +2,56 @@
 
 namespace App\Http\Controllers\Dash;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\FieldValidator;
 use App\Models\Dash\Field;
-use Illuminate\Http\Request;
 
 class FieldController extends BasicController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param FieldValidator $request
      */
     public function store(FieldValidator $request)
     {
         $data = $request->validated();
-        $field = Field::create($data);
+        $isStore = Field::create($data);
 
-        if ($field) {
+        if ($isStore) {
             echo json_encode(['info' => 'success']);
         }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Dash\Field  $field
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Field $field)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Dash\Field  $field
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Field $field)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dash\Field  $field
-     * @return \Illuminate\Http\Response
+     * @param FieldValidator $request
+     * @param Field $field
      */
     public function update(FieldValidator $request, Field $field)
     {
-        //
+        $isUpdated = $field->update($request->validated());
+
+        if ($isUpdated) {
+            echo json_encode([
+                'info' => 'success',
+                'name' => $field->name,
+                'prefix' => $field->prefix,
+                'type' => $field->type,
+            ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Dash\Field  $field
-     * @return \Illuminate\Http\Response
+     * @param Field $field
+     * @throws \Exception
      */
     public function destroy(Field $field)
     {
-        //
+        if ($field->delete()) {
+            echo json_encode(['info' => 'success']);
+        }
     }
 }

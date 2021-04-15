@@ -44,7 +44,8 @@ Route::group(
         Route::post('templates/get-template-fields/{id}', [\App\Http\Controllers\Dash\TemplateController::class, 'getTemplateFields'])
             ->name('templates.fields');
 
-        Route::resource('fields', \App\Http\Controllers\Dash\FieldController::class);
+        Route::resource('fields', \App\Http\Controllers\Dash\FieldController::class)
+            ->only(['store', 'update', 'destroy']);
 
         // admin/helper/...
         Route::group(['prefix' => 'helper'], function () {

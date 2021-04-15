@@ -22883,5 +22883,23 @@ dl li {
     padding: .625em;
     overflow-x: hidden;
     overflow-y: hidden;
-    background-color: rgba(0,0,0,.4);
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.hidden {
+    display: none;
+}
+
+.field-area,
+#field-form {
+    background-color: #dce0fd;
+}
+
+.roll-up-buttons .minus svg,
+.roll-up-buttons .plus svg {
+    cursor: pointer;
+}
+
+.field-area:last-child {
+    margin-bottom: 24px !important;
 }
