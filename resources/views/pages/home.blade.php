@@ -1,6 +1,5 @@
 {{--@extends('layouts.app')--}}
 
-{{--@isset($page)--}}
 {{--    @section('title')--}}
 {{--        {{ $page->title }}--}}
 {{--    @endsection--}}
@@ -12,11 +11,7 @@
 {{--        <meta property="og:image" content="{{ $url . $page->getImage() }}">--}}
 {{--        <meta name="keywords" content="{{ $page->keywords }}">--}}
 {{--    @endsection--}}
-{{--@endisset--}}
+
 {{--@section('content')--}}
 {{--    <h1>Homepage</h1>--}}
 {{--@endsection--}}
-
-{{--<h1><a href="{{ route('dashboard.index') }}">Dashboard</a></h1>--}}
-<p>This page is empty yet</p>
-<a href="{{ route('pages.index') }}">go to dashboard</a>

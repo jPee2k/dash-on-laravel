@@ -33,3 +33,8 @@ mix.copy('resources/fonts', 'public/fonts');
 mix.copy('resources/img', 'public/img');
 // summernote - fonts
 mix.copy('resources/css/dash/font', 'public/css/font');
+
+// site
+mix.scripts([
+    'resources/js/site/scripts.js',
+], 'public/js/site.js');

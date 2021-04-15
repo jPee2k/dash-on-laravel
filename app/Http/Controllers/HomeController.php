@@ -14,9 +14,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $page = Page::query()->where('name', 'main page')->limit(1)->get()->first();
-        $url = $request->root();
+        // $page = Page::query()->where('name', 'main page')->limit(1)->get()->first();
+        // $url = $request->root();
 
-        return view('pages.home', compact('page', 'url'));
+        // return view('pages.home', compact('page', 'url'));
+        abort(404, 'This page is empty');
     }
 }
