@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
-@section('title', '404')
+@if ($exception->getMessage())
+    @section('title', 'Empty page')
+@else
+    @section('title', 'Oops! 404...')
+@endif
+
 @section('content')
     <div class="main-container">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -13,7 +18,8 @@
                                      title="Error Occurred"/>
                                 <div class="row mt-5">
                                     <div class="col-12 text-center mt-xl-2">
-                                        @if ($exception && Auth::check() && Auth::user()->is_admin())
+                                        @if ($exception->getMessage())
+                                            {{--Auth::check() && Auth::user()->is_admin()--}}
                                             <h1 class="error-title">{{ $exception->getMessage() }}</h1>
                                             <a class="btn btn-sm btn-primary mt-3" href="{{ route('pages.index') }}">Go
                                                 to dashboard</a>
