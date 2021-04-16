@@ -13,7 +13,7 @@
                                      title="Error Occurred"/>
                                 <div class="row mt-5">
                                     <div class="col-12 text-center mt-xl-2">
-                                        @if ($exception && Auth::user()->is_admin())
+                                        @if ($exception && Auth::check() && Auth::user()->is_admin())
                                             <h1 class="error-title">{{ $exception->getMessage() }}</h1>
                                             <a class="btn btn-sm btn-primary mt-3" href="{{ route('pages.index') }}">Go
                                                 to dashboard</a>

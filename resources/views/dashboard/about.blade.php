@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    {{--<div class="card">
+    <div class="card">
         <div class="card-body">
             <div id="accordion-3" class="accordion accordion-faq-boxed">
                 <div class="card">
@@ -172,5 +172,5 @@
                 </div>
             </div>
         </div>
-    </div>--}}
+    </div>
 @endsection

@@ -32,6 +32,9 @@ Route::group(
         Route::get('/', [\App\Http\Controllers\Dash\DashboardController::class, 'index'])
             ->name('dashboard.index');
 
+        Route::get('about', [\App\Http\Controllers\Dash\DashboardController::class, 'about'])
+            ->name('dashboard.about');
+
         Route::resource('pages', \App\Http\Controllers\Dash\PageController::class)
             ->except('show');
 

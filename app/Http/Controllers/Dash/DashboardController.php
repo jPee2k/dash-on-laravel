@@ -14,6 +14,17 @@ class DashboardController extends BasicController
      */
     public function index()
     {
-        return view('dashboard.index');
+        // return view('dashboard.index');
+        return redirect()->route('dashboard.about');
+    }
+
+    /**
+     * Show About page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function about()
+    {
+        return view('dashboard.about');
     }
 }
