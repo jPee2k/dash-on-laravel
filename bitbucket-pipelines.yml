@@ -10,9 +10,4 @@ pipelines:
           script:
             - apt-get update
             - apt-get -qq install git-ftp
-            - git ftp init --user $FTP_USERNAME --passwd $FTP_PASSWORD ftp://htz-vps4.digitalspace.top/web/dashboard.redlab.site/public_html/
-            - npm install
-            - composer install
-            - php artisan key:gen --ansi
-            - npm run prod
-            - php artisan migrate --seed
+            - git ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD ftp://htz-vps4.digitalspace.top/web/dashboard.redlab.site/public_html/
