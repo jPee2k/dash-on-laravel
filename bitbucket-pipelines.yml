@@ -1,0 +1,18 @@
+image: samueldebruyn/debian-git
+pipelines:
+  default:
+    - step:
+        script:
+          - echo "This script run on all branches that don't have any specific pipeline assigned in 'branches'."
+  branches:
+    site:
+      - step:
+          script:
+            - apt-get update
+            - apt-get -qq install git-ftp
+            - git ftp init --user $FTP_USERNAME --passwd $FTP_PASSWORD ftp://htz-vps4.digitalspace.top/web/dashboard.redlab.site/public_html/
+            - npm install
+            - composer install
+            - php artisan key:gen --ansi
+            - npm run prod
+            - php artisan migrate --seed
