@@ -1,8 +1,0 @@
-RewriteEngine on
-RewriteCond %{REQUEST_URI} !^public
-RewriteRule ^(.*)$ public/$1 [L]
-
-AuthName "Authentication required"
-AuthType Basic
-AuthUserFile /home/redlab/web/dashboard.redlab.site/public_html/.htpasswd
-require user redlab2014
