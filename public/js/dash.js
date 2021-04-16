@@ -23755,6 +23755,9 @@ $(".custom-file-input").on("change", function () {
 // flash
 $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 
+// error <small>
+$('small.text-danger').delay(9000).fadeOut(350);
+
 // summernote
 $(function () {
     $('#summernote').summernote({

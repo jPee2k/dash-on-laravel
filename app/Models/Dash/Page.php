@@ -10,7 +10,16 @@ class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status', 'description', 'image_name', 'keywords', 'content_title', 'content_data'];
+    protected $fillable = ['name', 'status', 'description', 'image_name', 'keywords', 'content_title', 'content_data', 'template_id'];
+
+    /**
+     * o-2-m -> Template - Pages
+     * Get the templates for the page.
+     */
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
+    }
 
     public function scopePages($query)
     {

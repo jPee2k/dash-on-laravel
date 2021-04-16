@@ -1,16 +1,9 @@
-{{--<div id="custom-fields-area"></div>--}}
-
-{{--<div class="dropdown m-2">--}}
-{{--    <button class="btn btn-sm btn-primary shadow-none dropdown-toggle" type="button" id="add-custom-field-btn"--}}
-{{--            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--        Add custom field--}}
-{{--    </button>--}}
-{{--    <ul class="dropdown-menu" aria-labelledby="add-custom-field-btn" x-placement="bottom-start"--}}
-{{--        style="position: absolute; will-change: top, left; top: 32px; left: 0px;">--}}
-{{--        @foreach ($helper->getCustomFieldsList() as $key => $field)--}}
-{{--            <li class="dropdown-item">--}}
-{{--                <a class="dropdown-link" id="{{ $key }}" href="javascript:void(0);">{{ $field }}</a>--}}
-{{--            </li>--}}
-{{--        @endforeach--}}
-{{--    </ul>--}}
-{{--</div>--}}
+<div class="form-group">
+    {{ Form::label('templates', 'Select template for current page') }}
+    {{ Form::select('templates', $templates, $page->template_id, ['name' => 'template_id', 'class' => 'form-control', 'aria-describedby' => 'template-error']) }}
+    @if ($errors->has('template'))
+        <small id="template-error" class="form-text text-danger">
+            {{ $errors->first('template') }}
+        </small>
+    @endif
+</div>

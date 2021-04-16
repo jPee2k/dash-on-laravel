@@ -20,7 +20,7 @@ class CreatePagesTable extends Migration
             $table->string('status', 32)->default('draft');
 
             // template
-            $table->bigInteger('template_id')->nullable();
+            $table->bigInteger('template_id')->default(0);
 
             // meta
             $table->text('description')->nullable();

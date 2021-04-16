@@ -1,5 +1,5 @@
-<div
-    class="field-area field-area-{{ $field->id }} col-10 col-md-9 col-lg-6 border border-primary rounded py-1 px-3 mb-2 ml-5">
+<div class="field-area field-area-{{ $field->id }}
+    col-10 col-md-9 col-lg-6 border border-primary rounded py-1 px-3 mb-2 ml-5">
     <div class="row">
         <div class="col-6"><i class="field-title">{{ "{$field->type} - {$field->name}" }}</i></div>
         <div class="roll-up-buttons col-6 text-right">
@@ -43,7 +43,7 @@
                 Update Field
             </button>
             <button class="btn btn-sm btn-danger mr-1 mb-4" form="{{ 'field-delete-' . $field->id }}"
-               onclick="removeField(event ,{{ $field->id }})">
+                    onclick="removeField(event ,{{ $field->id }})">
                 Delete
             </button>
         </div>

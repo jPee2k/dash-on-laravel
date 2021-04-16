@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dash;
 
 use App\Http\Requests\PageValidator;
+use App\Models\Dash\Template;
 use App\Models\Dash\Page;
 use App\Models\Dash\Route;
 use Illuminate\Http\Request;
@@ -39,7 +40,10 @@ class PageController extends BasicController
         $page = new Page();
         $submitName = 'Create';
 
-        return view('dashboard.page.create', compact('page', 'submitName'));
+        $templates = Template::all()->pluck('name', 'id')
+            ->prepend('', 0);
+
+        return view('dashboard.page.create', compact('page', 'submitName', 'templates'));
     }
 
     /**
@@ -73,15 +77,36 @@ class PageController extends BasicController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Page $page
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Page $page
+     * @param Route $route
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Page $page, Route $route)
     {
         $submitName = 'Edit';
         $slug = $route->getSlug('page', $page->id);
 
-        return view('dashboard.page.edit', compact('page', 'submitName', 'slug'));
+        $templates = Template::all()->pluck('name', 'id')
+            ->prepend('', 0);
+        // $fields = collect([]);
+
+        if ($page->has('template')) {
+            $template = $page->template;
+
+            // if ($template && $template->has('fields')) {
+            //     $fields = $template->fields;
+            // }
+        }
+
+        return view('dashboard.page.edit', compact(
+            'page',
+            'submitName',
+            'slug',
+            'templates',
+            'template',
+            // 'fields',
+        ));
     }
 
     /**

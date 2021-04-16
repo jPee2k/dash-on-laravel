@@ -30,6 +30,15 @@ class Template extends Model
     }
 
     /**
+     * o-2-m -> template - Pages
+     * Get the page that owns the template.
+     */
+    public function pages()
+    {
+        return $this->hasMany(Page::class);
+    }
+
+    /**
      * o-2-m -> Template - Fields
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -56,6 +65,26 @@ class Template extends Model
     {
         // render html from view
         return view('dashboard.template.exist-fields', compact('field'))
+            ->render();
+    }
+
+    public function buildCFHTML($fields): string
+    {
+        $html = "";
+
+        if (is_array($fields)) {
+            foreach ($fields as $field) {
+                $html .= $this->generateCFHTML($field);
+            }
+        }
+
+        return $html;
+    }
+
+    public function generateCFHTML($field)
+    {
+        // render html for custom-fields
+        return view('dashboard.custom-field.fields', compact('field'))
             ->render();
     }
 

@@ -50,6 +50,12 @@ Route::group(
         Route::resource('fields', \App\Http\Controllers\Dash\FieldController::class)
             ->only(['store', 'update', 'destroy']);
 
+        Route::resource('pages/custom-fields', \App\Http\Controllers\Dash\CustomFieldController::class)
+            ->only(['store', 'update', 'destroy']);
+
+        Route::post('pages/get-custom-fields/{id}', [\App\Http\Controllers\Dash\CustomFieldController::class, 'getCustomFields'])
+            ->name('pages.fields');
+
         // admin/helper/...
         Route::group(['prefix' => 'helper'], function () {
             Route::get('make-slug', function () {

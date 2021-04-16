@@ -6,7 +6,7 @@
         <div class="card-header">
             <h5 class="card-title">Create Page</h5>
         </div>
-        {{ Form::model($page, ['method' => 'POST', 'url' => route('pages.store', $page), 'files' => true, 'role' => 'form', 'autocomplete' => 'off']) }}
+        {{ Form::model($page, ['method' => 'POST', 'url' => route('pages.store', $page), 'id' => 'page-form', 'files' => true, 'role' => 'form', 'autocomplete' => 'off']) }}
         <div class="card-body">
             {{-- tabs --}}
             @include('dashboard.page.form.tabs')
@@ -35,10 +35,10 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer bg-white text-right">
-            <button type="submit" class="btn btn-primary mr-2">{{ $submitName }}</button>
-            <button type="reset" class="btn btn-outline-primary">Cancel</button>
-        </div>
         {{ Form::close() }}
+        <div class="card-footer bg-white text-right">
+            <button type="submit" form="page-form" class="btn btn-primary mr-2">{{ $submitName }}</button>
+            <button type="reset" form="page-form" class="btn btn-outline-primary">Cancel</button>
+        </div>
     </div>
 @endsection
