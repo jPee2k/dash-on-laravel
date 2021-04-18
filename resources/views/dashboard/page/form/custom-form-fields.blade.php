@@ -5,7 +5,8 @@
             {{ Form::select('templates', $templates, $page->template_id, ['name' => 'template_id', 'class' => 'form-control', 'aria-describedby' => 'template-error']) }}
         </div>
         <div class="col-2 pl-0">
-            <a href="{{ route('templates.edit', $page->template_id) }}" data-href="{{ route('templates.index') }}" id="edit-template-link" class="btn btn-primary mr-2 text-nowrap">Edit Template</a>
+                <a href="{{ route('templates.edit', 'template-id') }}" data-href="{{ route('templates.index') }}"
+                   id="edit-template-link" class="btn btn-primary mr-2 text-nowrap">Edit Template</a>
         </div>
     </div>
 

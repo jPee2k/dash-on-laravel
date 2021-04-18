@@ -15,7 +15,7 @@ class CustomFieldController extends BasicController
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

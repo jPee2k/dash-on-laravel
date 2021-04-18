@@ -37,10 +37,14 @@
                     @include('dashboard.page.form.custom-form-fields')
                     {{ Form::close() }}
 
-                    {{--{{ Form::open(['method' => 'POST', 'data-url' => route('custom-fields.store'), 'id' => 'custom-fields-form']) }}--}}
+                    {{ Form::open(['method' => 'POST', 'data-url' => route('custom-fields.store'), 'id' => 'custom-fields-form']) }}
                     {{--custom-fields WRAPPER--}}
-                    <div id="custom-fields-area" data-url="{{ route('pages.fields', 1) }}"></div>
-                    {{--{{ Form::close() }}--}}
+                    <div id="custom-fields-area" data-url={{ route('pages.fields', 'template-id') }}></div>
+
+                    <div class="col-11 col-lg-12 text-right ml-5 mt-2 mb-0">
+                        <button id="save-custom-fields" class="btn btn-sm btn-warning px-4 hidden">Save Data</button>
+                    </div>
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>

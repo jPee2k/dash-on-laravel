@@ -34,6 +34,7 @@ function touchFieldBlock(id) {
 }
 
 /* --------->>> AJAX <<<--------- */
+
 // Save New Field uses Ajax Form
 function saveField(e) {
     e.preventDefault(0);
@@ -232,7 +233,6 @@ function removeField(e, id) {
 function getExistFields($wrapper, selector = '') {
     const url = changeUrl($wrapper, 'template-id', selectedTemplateId);
 
-    const $editTemplateLink = $('#edit-template-link');
     changeUrl($editTemplateLink, '', selectedTemplateId);
 
     $.ajax({
@@ -261,4 +261,5 @@ function getExistFields($wrapper, selector = '') {
         }
     });
 }
+
 /* --------->>> / AJAX <<<--------- */

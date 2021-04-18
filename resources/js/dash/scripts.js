@@ -8,9 +8,17 @@ const $customFieldsWrapper = $('#custom-fields-area'); // custom fields wrapper
 const $select = $('#nav-tab-content #templates'); // select for custom field
 const $customFieldsForm = $('form#custom-fields-form'); // custom fields form
 
+const $editTemplateLink = $('#edit-template-link'); // custom fields -> select -> button
+
 // for ajax
 var isSend = false;
 var selectedTemplateId = $select.children("option:selected").val();
+
+if (selectedTemplateId == 0) {
+    $editTemplateLink.hide();
+} else {
+    $editTemplateLink.show();
+}
 
 // helpers
 function isset(value) {

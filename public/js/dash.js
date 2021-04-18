@@ -23750,9 +23750,17 @@ const $customFieldsWrapper = $('#custom-fields-area'); // custom fields wrapper
 const $select = $('#nav-tab-content #templates'); // select for custom field
 const $customFieldsForm = $('form#custom-fields-form'); // custom fields form
 
+const $editTemplateLink = $('#edit-template-link'); // custom fields -> select -> button
+
 // for ajax
 var isSend = false;
 var selectedTemplateId = $select.children("option:selected").val();
+
+if (selectedTemplateId == 0) {
+    $editTemplateLink.hide();
+} else {
+    $editTemplateLink.show();
+}
 
 // helpers
 function isset(value) {
@@ -23936,6 +23944,7 @@ function touchFieldBlock(id) {
 }
 
 /* --------->>> AJAX <<<--------- */
+
 // Save New Field uses Ajax Form
 function saveField(e) {
     e.preventDefault(0);
@@ -24134,7 +24143,6 @@ function removeField(e, id) {
 function getExistFields($wrapper, selector = '') {
     const url = changeUrl($wrapper, 'template-id', selectedTemplateId);
 
-    const $editTemplateLink = $('#edit-template-link');
     changeUrl($editTemplateLink, '', selectedTemplateId);
 
     $.ajax({
@@ -24163,6 +24171,7 @@ function getExistFields($wrapper, selector = '') {
         }
     });
 }
+
 /* --------->>> / AJAX <<<--------- */
 
 /* --------->>> AJAX <<<--------- */
@@ -24175,17 +24184,25 @@ function buildCF() {
 
     if (selectedTemplateId == 0) {
         $('#save-custom-fields').hide();
+        $editTemplateLink.hide();
 
         return $customFieldsWrapper.html('');
     }
+
+    $editTemplateLink.show();
 
     addLoader();
     getExistFields($customFieldsWrapper, '#save-custom-fields');
 }
 
-// get form
-// onsubmit
-// $customFieldsForm.on('submit', saveData)
-// function saveData() {}
+
+$customFieldsForm.on('submit', saveData);
+function saveData(e) {
+    e.preventDefault(0);
+
+    // get form data
+
+    // ajax
+}
 
 /* --------->>> / AJAX <<<--------- */
