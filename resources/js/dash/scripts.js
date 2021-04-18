@@ -2,7 +2,28 @@
 const token = $('meta[name="csrf-token"]').attr('content');
 
 // useful const
-const $fieldsWrapper = $('#fields');
+const $templateFieldsWrapper = $('#fields'); // template fields wrapper
+const $customFieldsWrapper = $('#custom-fields-area'); // custom fields wrapper
+
+const $select = $('#nav-tab-content #templates'); // select for custom field
+const $customFieldsForm = $('form#custom-fields-form'); // custom fields form
+
+// for ajax
+var isSend = false;
+var selectedTemplateId = $select.children("option:selected").val();
+
+// helpers
+function isset(value) {
+    return typeof value !== 'undefined';
+}
+
+function getWrapperId($wrapper) {
+    if (isset($wrapper[0].id)) {
+        return $wrapper[0].id;
+    }
+
+    return false;
+}
 
 // uploading image-name
 $(".custom-file-input").on("change", function () {
@@ -16,14 +37,6 @@ $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 // error <small>
 $('small.text-danger').delay(9000).fadeOut(350);
 
-// summernote
-$(function () {
-    $('#summernote').summernote({
-        airMode: false,
-        tabsize: 4,
-        height: 300
-    });
-});
 
 // preloader
 function addLoader(currClass = 'body') {
@@ -43,17 +56,6 @@ function removeLoader(currClass = 'body') {
     $('.lds-ring').remove();
 }
 
-// show\hide field form on template page
-const $fieldFormWrapper = $('#field-form');
-const $fieldFormBtn = $('#add-form-field');
-
-$fieldFormBtn.click(function () {
-    if ($fieldFormWrapper.css('display') === 'none') {
-        showBlock($fieldFormWrapper, $fieldFormBtn, 'Hide');
-    } else {
-        hideBlock($fieldFormWrapper, $fieldFormBtn, 'Add field');
-    }
-});
 
 function showBlock(wrapper, button, text) {
     wrapper.show();
@@ -65,28 +67,6 @@ function hideBlock(wrapper, button, text) {
     button.text(text);
 }
 
-function touchFieldBlock(id) {
-    const $hiddenField = $('.field-area .field-' + id);
-    const $minus = $('.field-area-' + id + ' .roll-up-buttons .minus');
-    const $plus = $('.field-area-' + id + ' .roll-up-buttons .plus');
-    const $title = $('.field-area-' + id + ' .field-title');
-
-    if ($hiddenField.css('display') === 'none') {
-        // show
-        $plus.hide();
-        $minus.show();
-
-        $hiddenField.show();
-        $title.hide();
-    } else {
-        // hide
-        $minus.hide();
-        $plus.show();
-
-        $hiddenField.hide();
-        $title.show();
-    }
-}
 
 function getSuccessAlert(title = 'The field has been saved') {
     Swal.fire({
@@ -128,6 +108,7 @@ function confirmAction() {
     });
 }
 
+
 function clearFields(array) {
     array.forEach(function ($field) {
         if ($field.is('input')) {
@@ -138,233 +119,41 @@ function clearFields(array) {
     });
 }
 
-var isSend = false; // for ajax
 
-// Save New Field uses Ajax Form
-const $saveFieldBtn = $('#field-edit .form-sbt');
-$saveFieldBtn.click(function (e) {
-    e.preventDefault(0);
-    addLoader();
+function changeUrl($wrapper, search, replace) {
+    let url = '';
 
-    const $fieldForm = document.getElementById('field-edit');
-    const formData = new FormData($fieldForm);
-
-    const url = $('#field-edit').data('url');
-
-    if (!isSend) {
-        isSend = true;
-
-        $.ajax({
-                url: url,
-                type: 'POST',
-
-                headers: {
-                    'X-CSRF-Token': token
-                },
-
-                data: formData,
-                dataType: 'json',
-                cache: false,
-                processData: false,
-                contentType: false,
-
-                success: function (response) {
-                    if (typeof response.info !== 'undefined' && response.info === 'success') {
-                        hideBlock($fieldFormWrapper, $fieldFormBtn, 'Add field');
-
-                        const $fieldName = $('#field-edit input[name="name"]');
-                        const $fieldPrefix = $('#field-edit input[name="prefix"]');
-                        const $fieldType = $('#field-edit select[name="type"]');
-
-                        clearFields([$fieldName, $fieldPrefix, $fieldType]);
-                        getExistFields($fieldsWrapper);
-                        getSuccessAlert();
-                    }
-
-                    isSend = false;
-                    removeLoader();
-                },
-
-                error: function (response) {
-                    if (typeof response.responseJSON.errors !== 'undefined') {
-                        const errorsObj = response.responseJSON.errors;
-
-                        Object.keys(errorsObj).forEach(function (key) {
-                            let errorItems = errorsObj[key];
-                            let errorMessage = (typeof errorItems[0] !== 'undefined') ? errorItems[0] : '';
-
-                            let $errorMessage = $('<small class="text-danger">' + errorMessage + '</small>');
-                            let $currInput = $('#field-edit *[name=' + key + ']').closest('.form-group');
-                            $errorMessage.appendTo($currInput).delay(3000).slideUp(800, function () {
-                                $errorMessage.remove();
-                            });
-                        });
-                    }
-
-                    isSend = false;
-                    removeLoader();
-                }
-            }
-        );
+    if ($wrapper.data('url')) {
+        url = $wrapper.data('url').replace(search, replace);
+        $wrapper.attr('data-url', url);
+    } else if ($wrapper.data('href')) {
+        url = $wrapper.data('href') + `/${replace}/edit`;
+        $wrapper.attr('href', url);
     }
-});
 
-// Update Field uses Ajax Form
-function updateField(e, id) {
-    e.preventDefault(0);
-    addLoader();
-
-    const $fieldForm = document.getElementById('field-update-' + id);
-    const formData = new FormData($fieldForm);
-
-    const url = $('#field-update-' + id).data('url');
-
-    if (!isSend) {
-        isSend = true;
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-
-            headers: {
-                'X-CSRF-Token': token
-            },
-
-            data: formData,
-            dataType: 'json',
-            cache: false,
-            processData: false,
-            contentType: false,
-
-            success: function (response) {
-                if (typeof response.info !== 'undefined' && response.info === 'success') {
-
-                    const $fieldPrefix = $('#prefix-' + id);
-
-                    if (isset(response.prefix)) {
-                        $fieldPrefix.val(response.prefix);
-                    }
-
-                    if (isset(response.name) && isset(response.type)) {
-                        $('.field-area-' + id + ' .field-title').text(`${response.type} - ${response.name}`);
-                    }
-
-                    getSuccessAlert();
-                }
-
-                isSend = false;
-                removeLoader();
-            },
-
-            error: function (response) {
-                if (typeof response.responseJSON.errors !== 'undefined') {
-                    const errorsObj = response.responseJSON.errors;
-
-                    Object.keys(errorsObj).forEach(function (key) {
-                        let errorItems = errorsObj[key];
-                        let errorMessage = (typeof errorItems[0] !== 'undefined') ? errorItems[0] : '';
-
-                        let $errorMessage = $('<small class="text-danger">' + errorMessage + '</small>');
-                        let $currInput = $('#field-update-' + id + ' *[name=' + key + ']').closest('.form-group');
-                        $errorMessage.appendTo($currInput).delay(3000).slideUp(800, function () {
-                            $errorMessage.remove();
-                        });
-                    });
-                }
-
-                isSend = false;
-                removeLoader();
-            }
-        });
-    }
+    return url;
 }
 
-// Remove Field uses Ajax Form
-function removeField(e, id) {
-    e.preventDefault(0);
 
-    confirmAction().then(function (result) {
-        if (result.value !== true) {
-            return false;
-        }
-
-        addLoader();
-
-        const $fieldForm = document.getElementById('field-delete-' + id);
-        const formData = new FormData($fieldForm);
-
-        const url = $('#field-delete-' + id).data('url');
-
-        if (!isSend) {
-            isSend = true;
-
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-
-                headers: {
-                    'X-CSRF-Token': token
-                },
-
-                data: formData,
-                dataType: 'json',
-                cache: false,
-                processData: false,
-                contentType: false,
-
-                success: function (response) {
-                    if (typeof response.info !== 'undefined' && response.info === 'success') {
-                        $('.field-area-' + id).remove();
-                        getSuccessAlert('The field has been deleted');
-                    }
-
-                    isSend = false;
-                    removeLoader();
-                },
-
-                error: function (response) {
-                    if (response) {
-                        getErrorAlert();
-                    }
-
-                    isSend = false;
-                    removeLoader();
-                }
-            });
-        }
-    });
-
-}
-
-// Insert fields in view -> dashboard.template.edit
+/* -------->>> DOC READY <<<-------- */
 $(function () {
-    if ($fieldsWrapper.length) {
-        getExistFields($fieldsWrapper);
+    // summernote
+    $('#summernote').summernote({
+        airMode: false,
+        tabsize: 4,
+        height: 300
+    });
+
+    // Insert fields in view -> dashboard.template.edit
+    // template-fields.js
+    if ($templateFieldsWrapper.length) {
+        // load exists template fields
+        getExistFields($templateFieldsWrapper);
+    }
+
+    if ($customFieldsWrapper.length) {
+        // load exists custom fields
+        getExistFields($customFieldsWrapper, '#save-custom-fields');
     }
 });
-
-function getExistFields($wrapper) {
-    const url = $wrapper.data('url');
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        dataType: 'html',
-        headers: {
-            'X-CSRF-Token': token
-        },
-
-        success: function (response) {
-            if (typeof response !== 'undefined') {
-                $fieldsWrapper.html(response);
-            }
-        },
-        error: function (response) {
-            //
-        }
-    });
-}
-
-function isset(value) {
-    return typeof value !== 'undefined';
-}
+/* -------->>> / DOC READY <<<-------- */

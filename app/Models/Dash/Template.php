@@ -47,41 +47,40 @@ class Template extends Model
         return $this->hasMany(Field::class);
     }
 
-
-    public function buildHtml($fields): string
+    /**
+     * @param $fields
+     * @param $handler
+     * @return string
+     */
+    public function buildHtml($fields, $handler): string
     {
         $html = "";
 
         if (is_array($fields)) {
             foreach ($fields as $field) {
-                $html .= $this->generateHtmlField($field);
+                $html .= $this->$handler($field);
             }
         }
 
         return $html;
     }
 
-    public function generateHtmlField($field)
+    /**
+     * @param $field
+     * @return string
+     */
+    public function generateFieldHTML($field): string
     {
         // render html from view
         return view('dashboard.template.exist-fields', compact('field'))
             ->render();
     }
 
-    public function buildCFHTML($fields): string
-    {
-        $html = "";
-
-        if (is_array($fields)) {
-            foreach ($fields as $field) {
-                $html .= $this->generateCFHTML($field);
-            }
-        }
-
-        return $html;
-    }
-
-    public function generateCFHTML($field)
+    /**
+     * @param $field
+     * @return string
+     */
+    public function generateCustomFieldHTML($field): string
     {
         // render html for custom-fields
         return view('dashboard.custom-field.fields', compact('field'))

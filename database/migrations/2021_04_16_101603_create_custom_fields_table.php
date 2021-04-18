@@ -15,7 +15,8 @@ class CreateCustomFieldsTable extends Migration
     {
         Schema::create('custom_fields', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_id')->constrained()->onDelete('cascade');
+            $table->string('model', 32);
+            $table->foreignId('model_id')->constrained()->onDelete('cascade');
             $table->foreignId('template_id')->constrained()->onDelete('cascade');
             $table->foreignId('field_id')->constrained('template_fields')->onDelete('cascade');
             $table->string('name', 191);

@@ -52,9 +52,7 @@ class CustomFieldController extends BasicController
         if ($template) {
             $fields = $template->fields()->get()->all();
 
-            return $template->buildCFHTML($fields);
+            return $template->buildHTML($fields, 'generateCustomFieldHTML');
         }
-
-        return redirect()->back();
     }
 }

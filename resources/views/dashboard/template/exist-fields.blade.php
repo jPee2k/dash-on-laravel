@@ -39,7 +39,7 @@
             {{ Form::text("prefix-{$field->id}", $field->prefix, ['name' => 'prefix', 'class' => 'form-control', 'placeholder' => 'Enter the field name', 'novalidate']) }}
         </div>
         <div class="col text-right">
-            <button class="btn btn-sm btn-outline-primary mb-4 px-4">
+            <button class="btn btn-sm btn-warning mb-4 px-4">
                 Update Field
             </button>
             <button class="btn btn-sm btn-danger mr-1 mb-4" form="{{ 'field-delete-' . $field->id }}"

@@ -38,4 +38,13 @@ class Field extends Model
     {
         return $this->belongsTo(Template::class);
     }
+
+    /**
+     * o-2-o Field - CustomField
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function customField(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(CustomField::class);
+    }
 }

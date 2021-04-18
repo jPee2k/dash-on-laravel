@@ -19,10 +19,10 @@
                  class="col-md-9 col-lg-6 border border-primary rounded m-2 mb-4 px-4 pt-3">
                 <p class="h5 mb-4 text-center">New Field</p>
 
-                {{ Form::open(['method' => 'POST', 'url' => route('fields.store'), 'data-url' => route('fields.store'), 'files' => true, 'id' => 'field-edit', 'role' => 'form', 'autocomplete' => 'off']) }}
+                {{ Form::open(['method' => 'POST', 'url' => route('fields.store'), 'onsubmit' => 'saveField(event);', 'data-url' => route('fields.store'), 'files' => true, 'id' => 'field-edit', 'role' => 'form', 'autocomplete' => 'off']) }}
                 @include('dashboard.template.form-fields')
                 <div class="col text-right">
-                    <button type="submit" class="btn btn-sm btn-outline-primary form-sbt mb-4 px-4">
+                    <button type="submit" class="btn btn-sm btn-warning form-sbt mb-4 px-4">
                         Save Field
                     </button>
                 </div>

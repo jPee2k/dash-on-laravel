@@ -28,7 +28,7 @@ class PageValidator extends FormRequest
     public function rules()
     {
         $helper = new BasicHelper();
-        $templates = Template::all()->pluck('id');
+        $templates = Template::all()->pluck('id')->prepend(0);
 
         return [
             'name' => ['required', 'string', 'max:191', 'min:3'],

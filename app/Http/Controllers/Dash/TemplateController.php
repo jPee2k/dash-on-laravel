@@ -123,9 +123,7 @@ class TemplateController extends BasicController
         if ($template) {
             $fields = $template->fields()->get()->all();
 
-            return $template->buildHtml($fields);
+            return $template->buildHtml($fields, 'generateFieldHTML');
         }
-
-        return redirect()->back();
     }
 }

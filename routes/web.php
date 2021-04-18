@@ -44,7 +44,7 @@ Route::group(
         Route::resource('templates', \App\Http\Controllers\Dash\TemplateController::class)
             ->except('show');
 
-        Route::post('templates/get-template-fields/{id}', [\App\Http\Controllers\Dash\TemplateController::class, 'getTemplateFields'])
+        Route::get('templates/get-template-fields/{id}', [\App\Http\Controllers\Dash\TemplateController::class, 'getTemplateFields'])
             ->name('templates.fields');
 
         Route::resource('fields', \App\Http\Controllers\Dash\FieldController::class)
@@ -53,7 +53,7 @@ Route::group(
         Route::resource('pages/custom-fields', \App\Http\Controllers\Dash\CustomFieldController::class)
             ->only(['store', 'update', 'destroy']);
 
-        Route::post('pages/get-custom-fields/{id}', [\App\Http\Controllers\Dash\CustomFieldController::class, 'getCustomFields'])
+        Route::get('pages/get-custom-fields/{id}', [\App\Http\Controllers\Dash\CustomFieldController::class, 'getCustomFields'])
             ->name('pages.fields');
 
         // admin/helper/...

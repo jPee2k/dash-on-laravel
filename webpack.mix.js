@@ -28,6 +28,8 @@ mix.scripts([
     'resources/js/dash/vendor-override/tooltip.js',
     // 'resources/js/dash/components/sweet-alert.js',
     'resources/js/dash/scripts.js',
+    'resources/js/dash/template-fields.js',
+    'resources/js/dash/custom-fields.js',
 ], 'public/js/dash.js');
 mix.copy('resources/fonts', 'public/fonts');
 mix.copy('resources/img', 'public/img');

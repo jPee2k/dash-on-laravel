@@ -21,8 +21,9 @@
             @include('dashboard.shared.sidebar')
 
             <div class="main-panel">
-                @include('dashboard.shared.flash')
                 <div class="content-wrapper">
+                    @include('dashboard.shared.flash')
+
                     <div class="row">
                         <div class="col-lg-12 card-margin">
                             @yield('content')
